@@ -1,0 +1,10 @@
+flask==2.1.2
+flask-restful==0.3.9
+flask_sqlalchemy==2.5.1
+marshmallow==3.17.1
+marshmallow-sqlalchemy==0.28.1
+Faker==14.0.0
+requests==2.25.1
+requests-cache==0.9.6
+kafka-python==2.0.2
+gunicorn==20.1.0
