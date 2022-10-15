@@ -2,6 +2,7 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 import enum
+
 db = SQLAlchemy()
    
 class Response(db.Model):
@@ -25,7 +26,20 @@ class Usuario(db.Model):
     email = db.Column(db.String(50), unique = True)
     username = db.Column(db.String(100), unique = True)
     password = db.Column(db.String(20))
-    # tereas = db.relationship('Tareas', cascade='all, delete, delete-orphan')
+    tareas = db.relationship('Tarea', cascade='all, delete, delete-orphan')
+
+class FileStatus (str, enum.Enum):
+    UPLOADED = 0
+    PROCESSED = 1
+    
+class Tarea(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    fileConvertido = db.Column(db.String(500))
+    fileOriginal = db.Column(db.String(500))
+    newFormat = db.Column(db.String(5))
+    status = db.Column(db.Enum(FileStatus))
+    timeStamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
 
 
 class UsuarioSchema(SQLAlchemyAutoSchema):
@@ -34,18 +48,6 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
         include_relationships = True
         load_instance = True
         exclude = ('password',)
-
-class FileStatus (str, enum.Enum):
-    UPLOADED = 0
-    PROCESSED = 1
-
-class Tarea(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    fileConvertido = db.Column(db.String(500))
-    fileOriginal = db.Column(db.String(500))
-    newFormat = db.Column(db.String(5))
-    status = db.Column(db.Enum(FileStatus))
-    timeStamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 class TareaSchema(SQLAlchemyAutoSchema):
     class Meta:

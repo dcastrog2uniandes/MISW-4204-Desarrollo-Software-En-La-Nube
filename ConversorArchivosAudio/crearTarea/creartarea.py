@@ -1,7 +1,6 @@
 from flask_restful import Resource
 from flask_jwt_extended import create_access_token, jwt_required
 from flask import request
-from ConversorArchivosAudio.modelos.modelos import TareaSchema
 from modelos.modelos import db, Response, ResponseSchema, Tarea
 from validacion.validacion import Validacion
 import datetime

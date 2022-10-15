@@ -5,7 +5,9 @@ from flask_restful import Api
 from modelos.modelos import db
 from registro.registro import Registro
 from crearTarea.creartarea import CrearTarea
+from obtenerTareas.obtenerTareas import ObtenerTareas 
 from login.login import Login
+
 
 
 app = Flask(__name__)
@@ -26,5 +28,6 @@ api = Api(app)
 api.add_resource(Registro, '/api/auth/signup')
 api.add_resource(Login, '/api/auth/login')
 api.add_resource(CrearTarea, '/api/tasks')
+api.add_resource(ObtenerTareas, '/api/tasks')
 
 jwt = JWTManager(app)

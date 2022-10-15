@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from modelos.modelos import db, Usuario , Response, ResponseSchema
+from modelos.modelos import db, Usuario , Response, ResponseSchema, Tarea
 from validacion.validacion import Validacion
 import datetime
 
