@@ -1,9 +1,9 @@
 import os
 import pathlib
 
-from ..mp3 import convert_audio_to_mp3
-from ..ogg import convert_audio_to_ogg
-from ..wav import convert_audio_to_wav
+from mp3.conversor import convert_audio_to_mp3
+from ogg.conversor import convert_audio_to_ogg
+from wav.conversor import convert_audio_to_wav
 
 def convert_validator(filepath:str,name_output_file:str,output_format:str):
     #ruta_absoluta = str(pathlib.Path(__file__).parent.absolute())
