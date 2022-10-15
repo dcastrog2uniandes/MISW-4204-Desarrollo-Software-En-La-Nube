@@ -1,6 +1,7 @@
 import datetime 
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+import enum
 db = SQLAlchemy()
    
 class Response(db.Model):
@@ -33,3 +34,20 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
         include_relationships = True
         load_instance = True
         exclude = ('password',)
+
+class FileStatus (str, enum.Enum):
+    UPLOADED = 0
+    PROCESSED = 1
+
+class Tarea(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    fileConvertido = db.Column(db.String(500))
+    fileOriginal = db.Column(db.String(500))
+    newFormat = db.Column(db.String(5))
+    status = db.Column(db.Enum(FileStatus))
+    timeStamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+class TareaSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model= Tarea
+        load_instance = True        
