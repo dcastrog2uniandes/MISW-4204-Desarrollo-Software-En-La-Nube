@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from modelos.modelos import db
 from registro.registro import Registro
+from login.login import Login
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///conversorAudio.db'
@@ -21,7 +22,7 @@ cors = CORS(app)
 
 api = Api(app)
 api.add_resource(Registro, '/api/auth/signup')
-
+api.add_resource(Login, '/api/auth/login')
 
 
 jwt = JWTManager(app)
