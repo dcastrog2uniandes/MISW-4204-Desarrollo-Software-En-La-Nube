@@ -15,15 +15,19 @@ class Registro(Resource):
         response.hora_inicio = datetime.datetime.now()
         request_usuario = request.json
         for parametro in ['username', 'password1', 'password2', 'email']:
-            Validacion.validacionParametros(parametro)
-            Validacion.validacionParametroObligatorio(request_usuario[parametro])        
-        if (request_usuario['password1'] != request_usuario['password2'] ):
+            if Validacion.validacionParametros( request_usuario, parametro) is not None:
+                response.errors = response.errors + [Validacion.validacionParametros( request_usuario, parametro)]
+                response.Succeeded = False
+            elif Validacion.validacionParametroObligatorio(request_usuario[parametro]) is not None:
+                   response.errors = response.errors + [Validacion.validacionParametroObligatorio(request_usuario[parametro])]
+                   response.Succeeded = False
+        if (request_usuario['password1'] != request_usuario['password2']) and (Validacion.validacionParametros( request_usuario, 'password1') is not None) and (Validacion.validacionParametros( request_usuario, 'password2') is not None):
             response.errors = response.errors + [{"error": { "mensaje": "Las contrasenas no coinciden", "codigo": 1000 }}]
             response.Succeeded = False
-        if (len(Usuario.query.filter(Usuario.username == request_usuario['username']).all())>0):
+        if (Validacion.validacionParametros( request_usuario, 'username') is None) and (len(Usuario.query.filter(Usuario.username == request_usuario['username']).all())>0):
             response.errors = response.errors + [{"error": { "mensaje": "El usuario ya se encuentra registrado", "codigo": 1001 }}]
             response.Succeeded = False
-        if (len(Usuario.query.filter(Usuario.email == request_usuario['email']).all())>0):
+        if (Validacion.validacionParametros( request_usuario, 'email') is None) and (len(Usuario.query.filter(Usuario.email == request_usuario['email']).all())>0):
             response.errors = response.errors + [{"error": { "mensaje": "El email ya se encuentra registrado", "codigo": 1002 }}]
             response.Succeeded = False
         if response.Succeeded:
