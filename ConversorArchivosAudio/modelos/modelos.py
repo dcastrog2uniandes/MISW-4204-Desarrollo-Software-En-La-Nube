@@ -16,3 +16,20 @@ class ResponseSchema(SQLAlchemyAutoSchema):
     class Meta:
         model= Response
         load_instance = True
+        exclude = ('id',)
+
+
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    email = db.Column(db.String(50), unique = True)
+    username = db.Column(db.String(100), unique = True)
+    password = db.Column(db.String(20))
+    # tereas = db.relationship('Tareas', cascade='all, delete, delete-orphan')
+
+
+class UsuarioSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Usuario
+        include_relationships = True
+        load_instance = True
+        exclude = ('password',)
