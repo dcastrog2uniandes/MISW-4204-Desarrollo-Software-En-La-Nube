@@ -28,6 +28,6 @@ class Login(Resource):
                 response.errors = response.errors + [{'error': {'mensaje': 'No se encuentra el usuario.', 'codigo': 1007}}]
                 response.succeded = False
             else:
-                response.message = {'token': Token.crearToken(usuario.id)}
+                response.message = {'token': Token.crearToken(usuario.id), 'userId': usuario.id}
         response.hora_fin = datetime.datetime.now()
         return response_schema.dump(response)
