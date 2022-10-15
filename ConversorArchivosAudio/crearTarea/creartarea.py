@@ -8,7 +8,6 @@ import datetime
 
 response_schema = ResponseSchema()
 
-
 class CrearTarea(Resource):
     @jwt_required()
     def post(self):
