@@ -1,6 +1,6 @@
 import numbers
 import re
-from modelos.modelos import db, Usuario
+from modelos.modelos import db, Usuario, Tarea
 import os
 
 
@@ -64,5 +64,8 @@ class Validacion:
         if file_size > 5000000:
             response.errors += [{"error": {"mensaje": "El archivo excede el tamaño maximo", "codigo": 1010}}]
 
+    def validacionTareaExistente(self, response, id_task):
+        if len(Tarea.query.filter(Tarea.id == id_task).all()) == 0:
+            response.errors += [{"error": {"mensaje": "La tarea con el id {}, no existe".format(id_task), "codigo": 404}}]
 
         
