@@ -1,6 +1,7 @@
 import numbers
 import re
 from modelos.modelos import db, Usuario
+import os
 
 
 class Validacion:
@@ -45,3 +46,23 @@ class Validacion:
     def validacionContrasenaUsuario(self, response, username, password):
         if Usuario.query.filter(Usuario.username == username).all()[0].password != password:
             response.errors += [{"error": {"mensaje": "Contrasena no valida", "codigo": 404}}]
+
+    def validacionExisteArchivo(self, response, filepath):
+        file_exists = os.path.exists(filepath)
+        if not file_exists:
+            response.errors += [{"error": {"mensaje": "El archivo no existe", "codigo": 1008}}]            
+
+    def validacionFormatoArchivo(self, response, filepath):
+        formats = ['.wav','.ogg','.mp3']
+        root, extension = os.path.splitext(filepath)
+        if extension not in formats:
+            response.errors += [{"error": {"mensaje": "El formato no es valido", "codigo": 1009}}]
+
+    def validacionTamanioMax(self, response, filepath):
+        file_size = os.path.getsize(filepath) 
+        print(file_size)
+        if file_size > 5000000:
+            response.errors += [{"error": {"mensaje": "El archivo excede el tamaño maximo", "codigo": 1010}}]
+
+
+        
