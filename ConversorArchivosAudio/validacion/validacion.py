@@ -92,6 +92,6 @@ class Validacion:
 
     def validacionExisteArchivoDestino(self, response, filepath):
         root, file_name = os.path.split(filepath)
-        file_exists = os.path.exists('../Archivos/ArchivoCliente/'+file_name)
+        file_exists = os.path.exists('../Archivos/ArchivoOriginal/'+file_name)
         if file_exists:
-            response.errors += [{"error": {"mensaje": "El ya existe un archivo con este nombre", "codigo": 1012}}]         
+            response.errors += [{"error": {"mensaje": "Existe un archivo con este nombre en el destinio", "codigo": 1012}}]         
