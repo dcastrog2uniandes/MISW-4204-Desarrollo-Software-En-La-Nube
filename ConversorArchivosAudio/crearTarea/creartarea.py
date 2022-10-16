@@ -34,10 +34,11 @@ class CrearTarea(Resource):
 
         if len(response.errors) == 0:
             ruta_destino = shutil.move(request.json['fileName'], '../Archivos/ArchivoOriginal')
+            name_file = ruta_destino.split('/')[-1].split('.')[-2]
 
             usuario_tarea = Usuario.query.filter(
                 Usuario.id == int(id_usuario)).first()
-            nueva_tarea = Tarea(fileConvertido='../Archivos/ArchivoConversion/', fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=id_usuario)
+            nueva_tarea = Tarea(fileConvertido='../Archivos/ArchivoConversion/'+name_file+request.json['newFormat'], fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=id_usuario)
 
             db.session.add(nueva_tarea)
             db.session.commit()
