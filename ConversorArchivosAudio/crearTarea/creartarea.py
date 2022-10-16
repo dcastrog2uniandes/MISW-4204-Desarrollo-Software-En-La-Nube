@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import request
-from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema
+from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema, FileStatus
 from validacion.validacion import Validacion
 from messageBroker.messagebroker import KafkaProducer
 import datetime
@@ -17,7 +17,7 @@ class CrearTarea(Resource):
         response = Response()
         response.Succeeded = True
         response.errors = []
-        response.Estado = "UPLOADED"
+        response.Estado = FileStatus.PROCESSED.name
         response.hora_inicio = str(datetime.datetime.now())
         validacion.validacionParametros(response, request.headers, 'id')
         validacion.validacionParametros(response, request.json, 'fileName')
@@ -34,7 +34,7 @@ class CrearTarea(Resource):
 
             usuario_tarea = Usuario.query.filter(
                 Usuario.id == int(request.headers['id'])).first()
-            nueva_tarea = Tarea(fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status='UPLOADED', usuario=request.headers['id'])
+            nueva_tarea = Tarea(fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=request.headers['id'])
 
             db.session.add(nueva_tarea)
             db.session.commit()
