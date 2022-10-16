@@ -1,58 +1,63 @@
 import os
-from kafka.kafka import KafkaConsumerTareas, KafkaProducer
-
-from mp3.conversor import convert_audio_to_mp3
-from ogg.conversor import convert_audio_to_ogg
-from wav.conversor import convert_audio_to_wav
+from messageBroker.message_broker import KafkaProducer
+from mp3.conversor import ConversorMP3
+from ogg.conversor import ConversorOGG
+from wav.conversor import ConversorWAV
 
 kafka_producer = KafkaProducer()
-kafka_consumer_tareas = KafkaConsumerTareas()
 
-def convertr_manage():
 
-    tareas = kafka_consumer_tareas.recibirMensaje()
+class ConvertirAudio:
+    def convert_manage(self,object):
+        conversor_wav = ConversorWAV()
+        conversor_mp3 = ConversorMP3()
+        conversor_ogg = ConversorOGG()
 
-    for t in tareas:
-
-        output_format = t.newFormat
-        filepath = t.filepath
+        tarea = object['tarea']
+        usuario = object['usuario']
+        
+        output_format = tarea['newFormat']
+        filepath = tarea['fileOriginal']
         root, extension = os.path.splitext(filepath)
-        name_output_file = 'archivo_resultado'
+        name_output_file = tarea['fileConvertido']
+
         mensaje = {
-            'user': t.usuario.id,
-            'email_user': t.usuario.email,
-            'new_format': t.newFormat,
-            'file': t.filepath
+            'user': usuario['id'],
+            'email_user': usuario['email'],
+            'new_format': tarea['newFormat'],
+            'file': tarea['fileOriginal']
         }
         respuesta = {
             'estado': 'PROCESSED',
             'outputfile': name_output_file,
-            'new_format': t.newFormat,
-            'file': t.filepath
+            'new_format': tarea['newFormat'],
+            'file': tarea['fileOriginal']
         }
         
-
         if extension == '.wav':
             if output_format == '.mp3':
-                r = convert_audio_to_mp3(filepath, name_output_file, extension)
+                r = conversor_mp3.convert_audio_to_mp3(filepath, name_output_file, extension)
             if output_format == '.ogg':
-                r = convert_audio_to_ogg(filepath, name_output_file, extension)
+                r = conversor_ogg.convert_audio_to_ogg(filepath, name_output_file, extension)
 
         if extension == '.ogg':
             if output_format == '.mp3':
-                r = convert_audio_to_mp3(filepath, name_output_file, extension)
+                r = conversor_mp3.convert_audio_to_mp3(filepath, name_output_file, extension)
             if output_format == '.wav':
-                r = convert_audio_to_wav(filepath, name_output_file, extension)
+                r = conversor_wav.convert_audio_to_wav(filepath, name_output_file, extension)
         
         if extension == '.mp3':
             if output_format == '.wav':
-                r = convert_audio_to_wav(filepath, name_output_file, extension)
+                r = conversor_wav.convert_audio_to_wav(filepath, name_output_file, extension)
+                print('res: ', r)
             if output_format == '.ogg':
-                r = convert_audio_to_ogg(filepath, name_output_file, extension)
-
+                r = conversor_ogg.convert_audio_to_ogg(filepath, name_output_file, extension)
+        """
         if r['ok']:
-            kafka_producer.enviarNotificacion('Notificar', t.tarea, mensaje)
+            kafka_producer.enviarNotificacion('Notificar', tarea['id'], mensaje)
         else:
             respuesta['estado'] = 'FAILED'
 
-        kafka_producer.enviarRespuesta('Respuesta',t.tarea,respuesta)
+        kafka_producer.enviarRespuesta('Respuesta',tarea['id'],respuesta)
+        """
+        
