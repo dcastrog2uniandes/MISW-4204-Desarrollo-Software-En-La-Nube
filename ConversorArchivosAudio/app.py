@@ -8,6 +8,7 @@ from crearTarea.creartarea import CrearTarea
 from obtenerTareas.obtenerTareas import ObtenerTareas
 from obtenerTarea.obtenerTarea import ObtenerTarea 
 from login.login import Login
+from actualizarTarea.actualizatarea import ActualizarTarea
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///conversorAudio.db'
@@ -27,6 +28,7 @@ api = Api(app)
 api.add_resource(Registro, '/api/auth/signup')
 api.add_resource(Login, '/api/auth/login')
 api.add_resource(CrearTarea, '/api/tasks')
+api.add_resource(ActualizarTarea, '/api/tasks/<int:id_task>')
 api.add_resource(ObtenerTareas, '/api/tasks')
 api.add_resource(ObtenerTarea, '/api/tasks/<int:id_task>')
 
