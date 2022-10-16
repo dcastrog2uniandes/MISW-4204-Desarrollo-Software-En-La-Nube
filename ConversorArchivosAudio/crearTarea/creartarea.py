@@ -25,16 +25,20 @@ class CrearTarea(Resource):
 
         if len(response.errors) == 0:
             validacion.validacionExisteArchivo(response, request.json['fileName'])
+        
+        if len(response.errors) == 0:    
             validacion.validacionFormatoArchivo(response, request.json['fileName'])
             validacion.validacionTamanioMax(response, request.json['fileName'])
             validacion.validacionNumeroEntero(response, request.headers, 'id')
+            validacion.validacionExisteArchivoDestino(response, request.json['fileName'])
+
 
         if len(response.errors) == 0:
             ruta_destino = shutil.move(request.json['fileName'], '../Archivos/ArchivoOriginal')
 
             usuario_tarea = Usuario.query.filter(
                 Usuario.id == int(request.headers['id'])).first()
-            nueva_tarea = Tarea(fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=request.headers['id'])
+            nueva_tarea = Tarea(fileConvertido='../Archivos/ArchivoConversion/', fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=request.headers['id'])
 
             db.session.add(nueva_tarea)
             db.session.commit()

@@ -89,3 +89,9 @@ class Validacion:
     def validacionArchivoNoEncontrado(self, response, id, filename):
         if len([ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileOriginal.split('/')[-1] == filename] + [ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileConvertido.split('/')[-1] == filename] ) == 0:
             response.errors += [{"error": {"mensaje": "El archivo {} no fue encontrado".format(filename), "codigo": 404}}]
+
+    def validacionExisteArchivoDestino(self, response, filepath):
+        root, file_name = os.path.split(filepath)
+        file_exists = os.path.exists('../Archivos/ArchivoCliente/'+file_name)
+        if file_exists:
+            response.errors += [{"error": {"mensaje": "El ya existe un archivo con este nombre", "codigo": 1012}}]         
