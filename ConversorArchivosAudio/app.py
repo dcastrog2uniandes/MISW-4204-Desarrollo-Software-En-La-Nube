@@ -5,11 +5,9 @@ from flask_restful import Api
 from modelos.modelos import db
 from registro.registro import Registro
 from crearTarea.creartarea import CrearTarea
-from obtenerTareas.obtenerTareas import ObtenerTareas 
-from actualizarTarea.actualizatarea import ActualizarTarea
+from obtenerTareas.obtenerTareas import ObtenerTareas
+from obtenerTarea.obtenerTarea import ObtenerTarea 
 from login.login import Login
-
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///conversorAudio.db'
@@ -30,7 +28,6 @@ api.add_resource(Registro, '/api/auth/signup')
 api.add_resource(Login, '/api/auth/login')
 api.add_resource(CrearTarea, '/api/tasks')
 api.add_resource(ObtenerTareas, '/api/tasks')
-api.add_resource(ActualizarTarea, '/api/tasks/<int:id_tarea>')
-
+api.add_resource(ObtenerTarea, '/api/tasks/<int:id_task>')
 
 jwt = JWTManager(app)

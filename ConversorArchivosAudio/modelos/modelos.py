@@ -1,6 +1,8 @@
-import datetime 
+import datetime
+from attr import fields 
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow_enum import EnumField
 import enum
 
 db = SQLAlchemy()
@@ -26,13 +28,12 @@ class FileStatus (str, enum.Enum):
     
 class Tarea(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    fileConvertido = db.Column(db.String(500))
-    fileOriginal = db.Column(db.String(500))
+    fileConvertido = db.Column(db.String(5000))
+    fileOriginal = db.Column(db.String(5000))
     newFormat = db.Column(db.String(5))
     status = db.Column(db.Enum(FileStatus))
     timeStamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
-
 
 class UsuarioSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -44,4 +45,5 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
 class TareaSchema(SQLAlchemyAutoSchema):
     class Meta:
         model= Tarea
-        load_instance = True        
+        load_instance = True
+    status = EnumField(enum=FileStatus, required=True)
