@@ -1,15 +1,15 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import request
-from modelos.modelos import Usuario, db, Response, Tarea
+from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema
 from validacion.validacion import Validacion
 from messageBroker.messagebroker import KafkaProducer
-import pathlib
 import datetime
+import shutil
 
 validacion = Validacion()
 kafka_producer = KafkaProducer()
-
+tarea_schema = TareaSchema()
 
 class CrearTarea(Resource):
     @jwt_required()
@@ -30,20 +30,22 @@ class CrearTarea(Resource):
             validacion.validacionNumeroEntero(response, request.headers, 'id')
 
         if len(response.errors) == 0:
+            ruta_destino = shutil.move(request.json['fileName'], '../Archivos/ArchivoOriginal')
+
             usuario_tarea = Usuario.query.filter(
                 Usuario.id == int(request.headers['id'])).first()
-            nueva_tarea = Tarea(fileOriginal=request.json['fileName'], newFormat=request.json['newFormat'], status='UPLOADED', usuario=request.headers['id'])
+            nueva_tarea = Tarea(fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status='UPLOADED', usuario=request.headers['id'])
+
             db.session.add(nueva_tarea)
             db.session.commit()
+            
             response.message = "Tarea creada exitosamente"
             json_response = {
-                'tarea': nueva_tarea.id,
-                'usurio': {'id': request.headers['id'],
+                'tarea': tarea_schema.dump(Tarea.query.filter(Tarea.id == nueva_tarea.id).first()),
+                'usuario': {'id': request.headers['id'],
                            'email': usuario_tarea.email
-                           },
-                'filepath': request.json['fileName'],
-                'newFormat': request.json['newFormat']
-            }
+                           }
+                }
 
             kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
 
