@@ -69,3 +69,23 @@ class Validacion:
             response.errors += [{"error": {"mensaje": "La tarea con el id {}, no existe".format(id_task), "codigo": 404}}]
 
         
+
+    def validacionIdUsuarioNoEncontrado(self, response, id):
+        if len(Usuario.query.filter(Usuario.id == id).all()) == 0:
+            response.errors += [{"error": {"mensaje": "El usuario con ese id no se encuentra registrado", "codigo": 404}}]
+
+    def validacionParametroOpcionalExistente(self, headers, parametro):
+        try:
+            if len(headers[parametro]) == 0:
+                return False
+            else: return True
+        except:
+            return False
+
+    def validacionListaDeValores(self, response, request_json, parametro, lista):
+        if len([i for i in lista if i == request_json[parametro]]) == 0:
+            response.errors += [{"error": { "mensaje": "El parametro {} no tiene valor valido".format(parametro), "codigo": 1008 }}]
+
+    def validacionArchivoNoEncontrado(self, response, id, filename):
+        if len([ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileOriginal.split('/')[-1] == filename] + [ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileConvertido.split('/')[-1] == filename] ) == 0:
+            response.errors += [{"error": {"mensaje": "El archivo {} no fue encontrado".format(filename), "codigo": 404}}]
