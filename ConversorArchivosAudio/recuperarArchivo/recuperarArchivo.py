@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from modelos.modelos import Response, Tarea
 from validacion.validacion import Validacion
 import datetime
@@ -15,13 +15,9 @@ class RecuperarArchivo(Resource):
         response.errors = []
         response.Estado = "PROCESSED"
         response.hora_inicio = str(datetime.datetime.now())
-        validacion.validacionParametros(response, request.headers, 'id')
+        id_usuario = get_jwt_identity()
+        validacion.validacionArchivoNoEncontrado(response, id_usuario, filename)
         if len(response.errors) == 0:
-            validacion.validacionParametroObligatorio(response, request.headers, 'id')
-            validacion.validacionNumeroEntero(response, request.headers, 'id')
-            validacion.validacionIdUsuarioNoEncontrado(response, request.headers['id'])
-        if len(response.errors) == 0:
-            validacion.validacionArchivoNoEncontrado(response, request.headers['id'], filename)
-        if len(response.errors) == 0:
-           response.message = {'ruta': ([ta.fileOriginal for ta in Tarea.query.all() if ta.fileOriginal.split('/')[-1] == filename] + [ta.fileConvertido for ta in Tarea.query.all() if ta.fileConvertido.split('/')[-1] == filename])[0]}
+            response.message = {'ruta': [a for a in ([ta.fileOriginal for ta in Tarea.query.filter(Tarea.usuario == id_usuario).all() if ta.fileOriginal is not None] + [ta.fileConvertido for ta in Tarea.query.filter(Tarea.usuario == id_usuario).all() if ta.fileConvertido is not None]) if a.split('/')[-1] == filename][0] }
+            response.succeded = True
         return response.__dict__

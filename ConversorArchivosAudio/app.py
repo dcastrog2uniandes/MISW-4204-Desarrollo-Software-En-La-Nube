@@ -10,6 +10,7 @@ from obtenerTarea.obtenerTarea import ObtenerTarea
 from eliminarTarea.eliminarTarea import EliminarTarea
 from login.login import Login
 from actualizarTarea.actualizatarea import ActualizarTarea
+from recuperarArchivo.recuperarArchivo import RecuperarArchivo
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///conversorAudio.db'
@@ -33,5 +34,5 @@ api.add_resource(ActualizarTarea, '/api/tasks/<int:id_task>')
 api.add_resource(ObtenerTareas, '/api/tasks')
 api.add_resource(ObtenerTarea, '/api/tasks/<int:id_task>')
 api.add_resource(EliminarTarea, '/api/tasks/<int:id_task>')
-
+api.add_resource(RecuperarArchivo, '/api/files/<filename>')
 jwt = JWTManager(app)

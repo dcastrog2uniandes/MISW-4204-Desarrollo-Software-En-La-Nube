@@ -76,18 +76,20 @@ class Validacion:
 
     def validacionParametroOpcionalExistente(self, headers, parametro):
         try:
-            if len(headers[parametro]) == 0:
-                return False
-            else: return True
+            headers[parametro]
+            return True
         except:
             return False
 
     def validacionListaDeValores(self, response, request_json, parametro, lista):
         if len([i for i in lista if i == request_json[parametro]]) == 0:
-            response.errors += [{"error": { "mensaje": "El parametro {} no tiene valor valido".format(parametro), "codigo": 1008 }}]
+            response.errors += [{"error": { "mensaje": "El parametro {} no tiene valor valido".format(parametro), "codigo": 1011 }}]
 
     def validacionArchivoNoEncontrado(self, response, id, filename):
-        if len([ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileOriginal.split('/')[-1] == filename] + [ta for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileConvertido.split('/')[-1] == filename] ) == 0:
+        totalArchivos =  [ta.fileOriginal for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileOriginal is not None] + [ta.fileConvertido for ta in Tarea.query.filter(Tarea.usuario == id).all() if ta.fileConvertido is not None]
+        if (len(totalArchivos) == 0):
+            response.errors += [{"error": {"mensaje": "El usuario no tiene archivos".format(filename), "codigo": 404}}]
+        elif len([a for a in totalArchivos if a.split('/')[-1] == filename] ) == 0:
             response.errors += [{"error": {"mensaje": "El archivo {} no fue encontrado".format(filename), "codigo": 404}}]
 
     def validacionExisteArchivoDestino(self, response, filepath):
