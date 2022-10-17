@@ -8,7 +8,7 @@ class ConversorOGG:
             if format == '.mp3':
                 sound = AudioSegment.from_mp3(filepath)
             
-            sound.export(output_file + '.ogg', format='ogg')
+            sound.export(output_file, format='ogg')
             return {"ok": True}
         except:
             return {"ok": False}

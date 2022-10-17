@@ -1,15 +1,13 @@
 from json import dumps, loads
 from kafka import KafkaProducer, KafkaConsumer
-from convertir.convert import ConvertirAudio
+from ..convertir import ConvertirAudio
 
-class KafkaConsumerTareas():
+class KafkaConsumer():
     consumer = KafkaConsumer(
             'Tareas',
             bootstrap_servers = ['localhost:9092'],
             value_deserializer=lambda m: loads(m.decode('utf-8')),
             auto_offset_reset='earliest',
-            enable_auto_commit=True,
-            consumer_timeout_ms=1000
         )
     
     def recibirTareas(self):
@@ -18,7 +16,7 @@ class KafkaConsumerTareas():
             convertidor_audio.convert_manage(t.value)
             
 
-class KafkaProducer():
+class KafkaProducer:
     producer = KafkaProducer(
             bootstrap_servers = ['localhost:9092'],
             value_serializer=lambda m: dumps(m).encode('utf-8')

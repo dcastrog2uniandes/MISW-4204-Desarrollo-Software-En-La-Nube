@@ -1,10 +1,8 @@
 import os
-from messageBroker.message_broker import KafkaProducer
-from mp3.conversor import ConversorMP3
-from ogg.conversor import ConversorOGG
-from wav.conversor import ConversorWAV
 
-kafka_producer = KafkaProducer()
+from ..mp3 import ConversorMP3
+from ..ogg import ConversorOGG
+from ..wav import ConversorWAV
 
 
 class ConvertirAudio:

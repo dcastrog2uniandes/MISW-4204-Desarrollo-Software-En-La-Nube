@@ -9,7 +9,7 @@ class ConversorMP3:
             if format == '.wav':
                 sound = AudioSegment.from_wav(filepath)
         
-            sound.export(output_file + '.mp3', format='mp3')
+            sound.export(output_file, format='mp3')
             return {"ok": True}
         except:
             return {"ok": False}
