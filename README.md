@@ -32,6 +32,7 @@ La documentación de la APIREST se encuentra disponible en una colección de POS
 - **Servidor web HTTP:** Nginx
 - **Servicios de Mensajeria:** Kafka / offset Explorer 2.0
 - **Software conversor de archivos multimedia:** ffmpeg
+- **Pruebas de Estrés:**  JMeter
 
 ## Servidor de Desarrollo
 
@@ -71,12 +72,30 @@ docker compose up -d
 ```
 
 ### Levantar Microservicios
-A continuación se listas los microservicios 
+Teniendo en cuenta la arquitectura diseñada, se listas los microservicios y los puertos donde se ejecutan:
 
-| Microservicios         | Puerto | Comando                                                       |
+| Microservicio          | Puerto | Comando                                                       |
 |------------------------|--------|---------------------------------------------------------------|
 | ConversorArchivosAudio | 5000   | ```gunicorn --bind 0.0.0.0:5000 wsgi:ap```                    |
 | ConvertirArchivo       | 5001   | ```gunicorn --bind 0.0.0.0:5001 -w 1 --timeout 600 wsgi:ap``` |
 | EnviarCorreo           | 5002   | ```gunicorn --bind 0.0.0.0:5002 -w 1 --timeout 600 wsgi:ap``` |
 
+## Análisis de Capacidad
+.....
 
+## Plan de pruebas
+....
+
+## Ejecución Pruebas de Estrés 
+.....
+
+### Escenario 1
+....
+
+### Escenario 2
+....
+
+
+
+### Resultados
+Se encuentra en un documento disponible en la wiki: Escenario y Pruebas de Estrés API REST y Batch
