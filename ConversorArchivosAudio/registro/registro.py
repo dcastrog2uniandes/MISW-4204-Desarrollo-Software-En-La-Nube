@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from modelos.modelos import db, Usuario , Response
+from modelos.modelos import db, Usuario , Response, FileStatus
 from validacion.validacion import Validacion
 import datetime
 
@@ -12,7 +12,7 @@ class Registro(Resource):
         response = Response()
         response.succeded = False
         response.errors = []
-        response.Estado = "PROCESSED"
+        response.Estado = FileStatus.PROCESSED.name
         response.hora_inicio = str(datetime.datetime.now())
         validacion.validacionParametros(response, request.json, 'username')
         validacion.validacionParametros(response, request.json, 'password1')

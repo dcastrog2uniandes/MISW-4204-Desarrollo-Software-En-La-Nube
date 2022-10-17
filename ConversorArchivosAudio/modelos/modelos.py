@@ -53,4 +53,4 @@ class TareaSchemaGeneral(SQLAlchemyAutoSchema):
     class Meta:
         model= Tarea
         load_instance = True
-        exclude = ('timeStamp', 'fileConvertido', 'fileCliente')   
+        exclude = ('timeStamp', 'fileConvertido', 'fileCliente')

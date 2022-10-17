@@ -2,7 +2,7 @@ from pickletools import int4
 from flask_restful import Resource
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from modelos.modelos import db, Usuario , Response, Tarea, TareaSchemaGeneral
+from modelos.modelos import db, Usuario , Response, Tarea, TareaSchemaGeneral, FileStatus
 from validacion.validacion import Validacion
 import datetime
 from sqlalchemy import func
@@ -18,7 +18,7 @@ class ObtenerTareas(Resource):
         response = Response()
         response.succeded = False
         response.errors = []
-        response.Estado = "PROCESSED"
+        response.Estado = FileStatus.PROCESSED.name
         response.hora_inicio = str(datetime.datetime.now())
         validacion.validacionParametros(response, request.args, 'order')
 

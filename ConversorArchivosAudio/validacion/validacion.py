@@ -14,7 +14,6 @@ class Validacion:
     def validacionParametroObligatorio(self, response,  request_json, parametro):
         if len(request_json[parametro]) == 0:
             response.errors += [{"error": { "mensaje": "Parametro {} obligarotio".format(parametro), "codigo": 1002 }}]
-
     
     def validacionNumeroEntero(self, response, request_json, parametro):
         try:
@@ -22,7 +21,6 @@ class Validacion:
         except:
             response.errors += [{"error": { "mensaje": "El parametro {} no es numero entero".format(parametro), "codigo": 1003 }}]
          
-
     def validacionFormatoEmail(self, response, valor):
         if not re.search('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', valor):
             response.errors += [{"error": { "mensaje": "El email no tiene formato valido", "codigo": 1004}}]
@@ -67,8 +65,6 @@ class Validacion:
         if len(Tarea.query.filter(Tarea.id == id_task).all()) == 0:
             response.errors += [{"error": {"mensaje": "La tarea con el id {}, no existe".format(id_task), "codigo": 404}}]
 
-        
-
     def validacionIdUsuarioNoEncontrado(self, response, id):
         if len(Usuario.query.filter(Usuario.id == id).all()) == 0:
             response.errors += [{"error": {"mensaje": "El usuario con ese id no se encuentra registrado", "codigo": 404}}]
@@ -100,12 +96,11 @@ class Validacion:
     def validacionExisteArchivoActualizar(self, filepath):
         return os.path.exists(filepath)
         
-
-
     def validacionFormatoArchivoDestino(self, response, filepath, newFormat):
         root, extension = os.path.splitext(filepath)
-        print(extension)
-        print(newFormat)
-
         if extension == newFormat:
-            response.errors += [{"error": {"mensaje": "La extension origen es igual a la extension destino", "codigo": 1013}}]                 
+            response.errors += [{"error": {"mensaje": "La extension origen es igual a la extension destino", "codigo": 1013}}]
+
+    def validacionArchivoNoEstaDescargado(self,response, filepath, filename):
+        if os.path.exists(filepath + '/' + filename):
+            response.errors += [{"error": {"mensaje": "Ya se encuentra un archivo con el nombre {} en la ruta {}".format(filename, filepath)}, "codigo": 1014}]
