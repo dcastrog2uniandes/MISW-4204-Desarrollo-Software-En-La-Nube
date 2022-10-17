@@ -3,9 +3,6 @@ from pydub import AudioSegment
 
 class ConversorWAV:
     def convert_audio_to_wav(self,filepath:str,output_file:str,format:str):
-        print('file: ',filepath)
-        print('outpurfile: ',output_file)
-        print('format: ',format)
         try:
             if format == '.mp3':
                 sound = AudioSegment.from_mp3(filepath)
@@ -13,6 +10,8 @@ class ConversorWAV:
                 sound = AudioSegment.from_ogg(filepath)
             
             sound.export(output_file, format='wav')
-            return {"ok": True}
+            print('Se proceso el archivo: ',output_file)
+            return True
         except:
-            return {"ok": False}
+            print('Error al procesar el archivo: ',output_file)
+            return False

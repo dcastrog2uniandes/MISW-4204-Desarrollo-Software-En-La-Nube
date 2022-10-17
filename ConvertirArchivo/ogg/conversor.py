@@ -9,6 +9,8 @@ class ConversorOGG:
                 sound = AudioSegment.from_mp3(filepath)
             
             sound.export(output_file, format='ogg')
-            return {"ok": True}
+            print('Se proceso el archivo: ',output_file)
+            return True
         except:
-            return {"ok": False}
+            print('Error al procesar el archivo: ',output_file)
+            return False

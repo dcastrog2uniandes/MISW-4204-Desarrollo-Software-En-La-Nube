@@ -60,7 +60,6 @@ class Validacion:
 
     def validacionTamanioMax(self, response, filepath):
         file_size = os.path.getsize(filepath) 
-        print(file_size)
         if file_size > 5000000:
             response.errors += [{"error": {"mensaje": "El archivo excede el tamaño maximo", "codigo": 1010}}]
 

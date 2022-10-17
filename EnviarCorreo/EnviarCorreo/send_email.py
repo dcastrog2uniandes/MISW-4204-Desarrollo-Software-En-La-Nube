@@ -1,12 +1,9 @@
 import smtplib
 from email.message import EmailMessage
-from kafka.kafka import KafkaConsumerNotificaciones
 
-kafka_consumer_notificaciones = KafkaConsumerNotificaciones()
+class EnviarNotificacion:
+    def send_email_notification(self,m):
 
-def send_email_notification():
-    notificaciones = kafka_consumer_notificaciones.enviarNotificacion()
-    for m in notificaciones:
         body = """
             <!DOCTYPE html>
                 <head>
@@ -14,10 +11,12 @@ def send_email_notification():
                         <h1>Notificación de Conversión de Audio</h1>
 
                         <p>Hola <b>{}</b>, </p>
-                        <p>El archivo <i>{}</i> ha sido convertido a formato {} exitosamente.</p>
+                        <p>El archivo <i>{}</i> ha sido convertido al formato {} exitosamente y se encuentra en la ruta {}.
+                            El nùmero de la tarea es: {}
+                        </p>
                     </body>
                 </head>
-            """.format(m['user'],m['file'],m['new_format'])
+            """.format(m['user'],m['file'],m['new_format'],m['file_output'],m['tarea'])
 
         # Objeto emailMessage
         message = EmailMessage()

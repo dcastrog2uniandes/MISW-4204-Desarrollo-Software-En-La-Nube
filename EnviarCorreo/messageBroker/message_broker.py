@@ -1,19 +1,19 @@
 from json import loads
 from kafka import KafkaConsumer
-from convertir.convert import ConvertirAudio
+from EnviarCorreo.send_email import EnviarNotificacion
 
 class KafkaConsumer():
     consumer = KafkaConsumer(
-        'Tareas',
+        'Notificar',
         bootstrap_servers = ['localhost:9092'],
         value_deserializer=lambda m: loads(m.decode('utf-8')),
         auto_offset_reset='earliest',
     )
     
-    def recibirTareas(self):
-        convertidor_audio = ConvertirAudio()
-        for t in self.consumer:
-            convertidor_audio.convert_manage(t.value)
+    def enviarNotificacion(self):
+        notificador = EnviarNotificacion()
+
+        for n in self.consumer:
+            notificador.send_email_notification(n.value)
             
-
-
+        

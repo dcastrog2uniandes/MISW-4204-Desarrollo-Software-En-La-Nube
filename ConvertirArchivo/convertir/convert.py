@@ -3,6 +3,7 @@ import os
 from mp3.conversor import ConversorMP3
 from ogg.conversor import ConversorOGG
 from wav.conversor import ConversorWAV
+from messageBroker.message_broker_envio import KafkaProducerRespuestas
 
 
 class ConvertirAudio:
@@ -10,6 +11,7 @@ class ConvertirAudio:
         conversor_wav = ConversorWAV()
         conversor_mp3 = ConversorMP3()
         conversor_ogg = ConversorOGG()
+        kafka_producer = KafkaProducerRespuestas()
 
         tarea = object['tarea']
         usuario = object['usuario']
@@ -23,14 +25,10 @@ class ConvertirAudio:
             'user': usuario['id'],
             'email_user': usuario['email'],
             'new_format': tarea['newFormat'],
-            'file': tarea['fileOriginal']
-        }
-        respuesta = {
-            'estado': 'PROCESSED',
-            'outputfile': name_output_file,
-            'new_format': tarea['newFormat'],
-            'file': tarea['fileOriginal']
-        }
+            'file': tarea['fileOriginal'],
+            'file_output': tarea['fileConvertido'],
+            'tarea': tarea['id']        
+            }
         
         if extension == '.wav':
             if output_format == '.mp3':
@@ -50,12 +48,13 @@ class ConvertirAudio:
                 print('res: ', r)
             if output_format == '.ogg':
                 r = conversor_ogg.convert_audio_to_ogg(filepath, name_output_file, extension)
-        """
-        if r['ok']:
-            kafka_producer.enviarNotificacion('Notificar', tarea['id'], mensaje)
+        
+        if r:
+            tarea['status'] = 'PROCESSED'
+            kafka_producer.enviarNotificacion('Notificar', str(tarea['id']), mensaje)
         else:
-            respuesta['estado'] = 'FAILED'
+            tarea['status'] = 'FAILED'
 
-        kafka_producer.enviarRespuesta('Respuesta',tarea['id'],respuesta)
-        """
+        kafka_producer.enviarRespuesta('Respuesta',str(tarea['id']),tarea)
+        
         
