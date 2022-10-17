@@ -30,6 +30,8 @@ class CrearTarea(Resource):
             validacion.validacionFormatoArchivo(response, request.json['fileName'])
             validacion.validacionTamanioMax(response, request.json['fileName'])
             validacion.validacionExisteArchivoDestino(response, request.json['fileName'])
+            validacion.validacionFormatoArchivoDestino(response, request.json['fileName'], request.json['newFormat'] )
+            
 
 
         if len(response.errors) == 0:
