@@ -1,8 +1,8 @@
 import os
 
-from ..mp3 import ConversorMP3
-from ..ogg import ConversorOGG
-from ..wav import ConversorWAV
+from mp3.conversor import ConversorMP3
+from ogg.conversor import ConversorOGG
+from wav.conversor import ConversorWAV
 
 
 class ConvertirAudio:
