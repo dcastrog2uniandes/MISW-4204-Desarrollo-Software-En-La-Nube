@@ -28,6 +28,7 @@ class FileStatus (str, enum.Enum):
     
 class Tarea(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    fileCliente = db.Column(db.String(5000))
     fileConvertido = db.Column(db.String(5000))
     fileOriginal = db.Column(db.String(5000))
     newFormat = db.Column(db.String(5))
@@ -52,4 +53,4 @@ class TareaSchemaGeneral(SQLAlchemyAutoSchema):
     class Meta:
         model= Tarea
         load_instance = True
-        exclude = ('timeStamp', 'fileConvertido')   
+        exclude = ('timeStamp', 'fileConvertido', 'fileCliente')   
