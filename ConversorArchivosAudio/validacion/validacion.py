@@ -95,4 +95,17 @@ class Validacion:
         root, file_name = os.path.split(filepath)
         file_exists = os.path.exists('../Archivos/ArchivoOriginal/'+file_name)
         if file_exists:
-            response.errors += [{"error": {"mensaje": "Existe un archivo con este nombre en el destinio", "codigo": 1012}}]         
+            response.errors += [{"error": {"mensaje": "Existe un archivo con este nombre en el destinio", "codigo": 1012}}]
+
+    def validacionExisteArchivoActualizar(self, filepath):
+        return os.path.exists(filepath)
+        
+
+
+    def validacionFormatoArchivoDestino(self, response, filepath, newFormat):
+        root, extension = os.path.splitext(filepath)
+        print(extension)
+        print(newFormat)
+
+        if extension == newFormat:
+            response.errors += [{"error": {"mensaje": "La extension origen es igual a la extension destino", "codigo": 1013}}]                 
