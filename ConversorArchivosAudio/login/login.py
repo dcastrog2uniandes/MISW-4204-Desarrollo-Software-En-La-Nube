@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask import request
 from modelos.modelos import db, Usuario, Response, FileStatus
 from validacion.validacion import Validacion
+from messageBroker.messagebroker import KafkaConsumer
 import datetime
 
 validacion = Validacion()
@@ -27,6 +28,8 @@ class Login(Resource):
                             Usuario.password == request.json["password"]).first()
             response.message = {'token': Token.crearToken(usuario.id), 'id': usuario.id}
             response.succeded = True
+            # kafka_consumer_tareas = KafkaConsumer()
+            # kafka_consumer_tareas.recibirTareas()
 
         response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

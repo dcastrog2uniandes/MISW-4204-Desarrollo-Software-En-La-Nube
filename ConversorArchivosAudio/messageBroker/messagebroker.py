@@ -18,7 +18,7 @@ class KafkaProducer():
 
 class KafkaConsumer():
     consumer = KafkaConsumer(
-        'Tareas',
+        'Respuesta',
         bootstrap_servers = ['localhost:9092'],
         value_deserializer=lambda m: loads(m.decode('utf-8')),
         auto_offset_reset='earliest',
