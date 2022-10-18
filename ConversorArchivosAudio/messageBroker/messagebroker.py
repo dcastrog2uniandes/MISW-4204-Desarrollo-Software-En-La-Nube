@@ -1,6 +1,6 @@
-from json import dumps
-from kafka import KafkaProducer
-import os
+from json import dumps, loads
+from kafka import KafkaProducer, KafkaConsumer
+from actualizarEstado.actualizarEstado import ActualizarEstado
 
 class KafkaProducer():
     server = os.environ.get('SERVER_KAFKA', None)
@@ -15,3 +15,17 @@ class KafkaProducer():
     def enviarTarea(self, topic, keys, mensaje):
         self.producer.send(topic, key=bytes(keys, 'utf-8'), value = mensaje)
         self.producer.flush()
+
+class KafkaConsumer():
+    consumer = KafkaConsumer(
+        'Tareas',
+        bootstrap_servers = ['localhost:9092'],
+        value_deserializer=lambda m: loads(m.decode('utf-8')),
+        auto_offset_reset='earliest',
+    )
+    
+
+    def recibirTareas(self):
+        actualizar_estado = ActualizarEstado()
+        for t in self.consumer:
+            actualizar_estado.actualizarEstadoTarea(t.value)
