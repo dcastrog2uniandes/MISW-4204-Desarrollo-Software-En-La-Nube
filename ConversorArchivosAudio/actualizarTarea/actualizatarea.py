@@ -49,8 +49,9 @@ class ActualizarTarea(Resource):
 
             json_response = {
                 'tarea': tarea_schema.dump(tarea_actualizar),
-                'usuario': {'id': id_usuario,
-                           'email': usuario_tarea.email
+                'usuario': {
+                                'id': usuario_tarea.username,
+                                'email': usuario_tarea.email
                            }
                 }
 

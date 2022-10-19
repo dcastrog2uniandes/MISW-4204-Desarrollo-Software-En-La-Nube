@@ -44,7 +44,7 @@ services:
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
     - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
     - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000", "wsgi:app"]
   api-convertirArchivo:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
@@ -65,7 +65,7 @@ services:
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
     - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
     - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "600", "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000", "wsgi:app"]
   api-enviarCorreo:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
@@ -81,7 +81,7 @@ services:
     links: 
       - kafka
     restart: always
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "600", "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000", "wsgi:app"]
 networks:
   myapp:
     name: "myapp"

@@ -47,8 +47,9 @@ class CrearTarea(Resource):
             response.message = "Tarea creada exitosamente"
             json_response = {
                 'tarea': tarea_schema.dump(Tarea.query.filter(Tarea.id == nueva_tarea.id).first()),
-                'usuario': {'id': id_usuario,
-                           'email': usuario_tarea.email
+                'usuario': {
+                                'id': usuario_tarea.username,
+                                'email': usuario_tarea.email
                            }
                 }
 
