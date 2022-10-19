@@ -39,6 +39,14 @@ services:
     links: 
       - kafka
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '1'
+          memory: 500M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
@@ -60,6 +68,14 @@ services:
     links: 
       - kafka
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '1'
+          memory: 500M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
@@ -81,6 +97,14 @@ services:
     links: 
       - kafka
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '1'
+          memory: 500M
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000", "wsgi:app"]
 networks:
   myapp:
