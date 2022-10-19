@@ -1,6 +1,7 @@
 from json import dumps, loads
 from kafka import KafkaProducer, KafkaConsumer
 from actualizarEstado.actualizarEstado import ActualizarEstado
+import os
 
 class KafkaProducer():
     server = os.environ.get('SERVER_KAFKA', None)
@@ -17,14 +18,19 @@ class KafkaProducer():
         self.producer.flush()
 
 class KafkaConsumer():
+    server = os.environ.get('SERVER_KAFKA', None)
+    if server == None:
+        server = 'localhost:9092'
+
     consumer = KafkaConsumer(
         'Respuesta',
-        bootstrap_servers = ['localhost:9092'],
+        bootstrap_servers = [server],
         value_deserializer=lambda m: loads(m.decode('utf-8')),
         auto_offset_reset='earliest',
+        enable_auto_commit=True,
+        consumer_timeout_ms=1000
     )
     
-
     def recibirTareas(self):
         actualizar_estado = ActualizarEstado()
         for t in self.consumer:
