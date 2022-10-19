@@ -4,13 +4,15 @@ from modelos.modelos import db, Response, Tarea, TareaSchema, FileStatus
 from eliminarFile.eliminarFile import EliminarFile
 import datetime
 from validacion.validacion import Validacion
-
+from messageBroker.messagebroker import KafkaConsumer
 tarea_schema = TareaSchema()
 validacion = Validacion()
 
 class EliminarTarea(Resource):
     @jwt_required()
     def delete(self, id_task):
+        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas.recibirTareas()
         response = Response()
         response.succeded = False
         response.errors = []

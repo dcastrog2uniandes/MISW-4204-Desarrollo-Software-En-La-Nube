@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema, FileStatus
 from validacion.validacion import Validacion
-from messageBroker.messagebroker import KafkaProducer
+from messageBroker.messagebroker import KafkaProducer, KafkaConsumer
 import datetime
 import shutil
 
@@ -14,6 +14,8 @@ tarea_schema = TareaSchema()
 class CrearTarea(Resource):
     @jwt_required()
     def post(self):
+        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas.recibirTareas()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True
@@ -31,19 +33,15 @@ class CrearTarea(Resource):
             validacion.validacionTamanioMax(response, request.json['fileName'])
             validacion.validacionExisteArchivoDestino(response, request.json['fileName'])
             validacion.validacionFormatoArchivoDestino(response, request.json['fileName'], request.json['newFormat'] )
-            
-
 
         if len(response.errors) == 0:
             ruta_destino = shutil.move(request.json['fileName'], '../Archivos/ArchivoOriginal')
             name_file = ruta_destino.split('/')[-1].split('.')[-2]
-
             usuario_tarea = Usuario.query.filter( Usuario.id == int(id_usuario)).first()
+            
             nueva_tarea = Tarea(fileCliente=request.json['fileName'], fileConvertido='../Archivos/ArchivoConversion/'+name_file+request.json['newFormat'], fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=id_usuario)
-
             db.session.add(nueva_tarea)
             db.session.commit()
-            
             response.message = "Tarea creada exitosamente"
             json_response = {
                 'tarea': tarea_schema.dump(Tarea.query.filter(Tarea.id == nueva_tarea.id).first()),

@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request
 from modelos.modelos import db, Usuario , Response, FileStatus
 from validacion.validacion import Validacion
+from messageBroker.messagebroker import KafkaConsumer
 import datetime
 
 validacion = Validacion()
@@ -9,6 +10,8 @@ validacion = Validacion()
 class Registro(Resource):
 
     def post(self):
+        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas.recibirTareas()
         response = Response()
         response.succeded = False
         response.errors = []

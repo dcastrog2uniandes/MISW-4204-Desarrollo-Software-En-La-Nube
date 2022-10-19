@@ -104,3 +104,7 @@ class Validacion:
     def validacionArchivoNoEstaDescargado(self,response, filepath, filename):
         if os.path.exists(filepath + '/' + filename):
             response.errors += [{"error": {"mensaje": "Ya se encuentra un archivo con el nombre {} en la ruta {}".format(filename, filepath)}, "codigo": 1014}]
+
+    def validacionUsuarioSinTareas(self, response, id_usuario):
+        if len(Tarea.query.filter(Tarea.usuario == id_usuario).all()) == 0:
+            response.errors += [{"error": {"mensaje": "El usuario no tiene tareas", "codigo": 1015}}]

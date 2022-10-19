@@ -54,3 +54,4 @@ class TareaSchemaGeneral(SQLAlchemyAutoSchema):
         model= Tarea
         load_instance = True
         exclude = ('timeStamp', 'fileConvertido', 'fileCliente')
+    status = EnumField(enum=FileStatus, required=True)

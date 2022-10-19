@@ -9,6 +9,8 @@ import datetime
 validacion = Validacion()
 class Login(Resource):
     def post(self):
+        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas.recibirTareas()
         response = Response()
         response.succeded = False
         response.errors = []
@@ -28,8 +30,6 @@ class Login(Resource):
                             Usuario.password == request.json["password"]).first()
             response.message = {'token': Token.crearToken(usuario.id), 'id': usuario.id}
             response.succeded = True
-            kafka_consumer_tareas = KafkaConsumer()
-            kafka_consumer_tareas.recibirTareas()
 
         response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

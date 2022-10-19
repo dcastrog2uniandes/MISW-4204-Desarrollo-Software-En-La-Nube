@@ -7,6 +7,7 @@ from messageBroker.messagebroker import KafkaProducer
 from eliminarFile.eliminarFile import EliminarFile 
 import datetime
 import shutil
+from messageBroker.messagebroker import KafkaConsumer
 
 validacion = Validacion()
 kafka_producer = KafkaProducer()
@@ -15,6 +16,8 @@ tarea_schema = TareaSchema()
 class ActualizarTarea(Resource):
     @jwt_required()
     def put(self, id_task):
+        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas.recibirTareas()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True
