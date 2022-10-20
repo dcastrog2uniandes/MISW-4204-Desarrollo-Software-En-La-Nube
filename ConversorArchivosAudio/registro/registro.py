@@ -8,7 +8,6 @@ import datetime
 validacion = Validacion()
 
 class Registro(Resource):
-
     def post(self):
         kafka_consumer_tareas = KafkaConsumer()
         kafka_consumer_tareas.recibirTareas()

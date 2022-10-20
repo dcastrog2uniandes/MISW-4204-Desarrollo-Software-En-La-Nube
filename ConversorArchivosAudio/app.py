@@ -11,9 +11,11 @@ from eliminarTarea.eliminarTarea import EliminarTarea
 from login.login import Login
 from actualizarTarea.actualizatarea import ActualizarTarea
 from recuperarArchivo.recuperarArchivo import RecuperarArchivo
-
+from prometheus_flask_exporter import RESTfulPrometheusMetrics
 
 app = Flask(__name__)
+metrics = RESTfulPrometheusMetrics.for_app_factory()
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///conversorAudio.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
@@ -21,15 +23,14 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 app_context = app.app_context()
 app_context.push()
-
-
-
+ 
 db.init_app(app)
 db.create_all()
 
 cors = CORS(app)
 
 api = Api(app)
+
 api.add_resource(Registro, '/api/auth/signup')
 api.add_resource(Login, '/api/auth/login')
 api.add_resource(CrearTarea, '/api/tasks')
@@ -40,3 +41,8 @@ api.add_resource(EliminarTarea, '/api/tasks/<int:id_task>')
 api.add_resource(RecuperarArchivo, '/api/files/<filename>')
 jwt = JWTManager(app)
 
+# and later
+metrics.init_app(app, api)
+metrics.summary('test_by_status', 'Test Request latencies by status', labels={
+                    'code': lambda r: r.status_code
+                })

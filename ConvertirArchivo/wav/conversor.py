@@ -1,3 +1,4 @@
+import sys
 from pydub import AudioSegment
 
 
@@ -11,6 +12,7 @@ class ConversorWAV:
             
             sound.export(output_file, format='wav')
             print('Se proceso el archivo: ',output_file)
+            sys.stdout.flush()
             return True
         except:
             print('Error al procesar el archivo: ',output_file)

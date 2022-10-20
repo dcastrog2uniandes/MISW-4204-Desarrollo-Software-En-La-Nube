@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 3s
+
+  external_labels:
+    monitor: "api-conversorArchivosAudio"
+
+rule_files:
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: "conversor archivos"
+    static_configs:
+      - targets: ["api-conversorArchivosAudio:5000"]

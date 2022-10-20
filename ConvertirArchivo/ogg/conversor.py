@@ -1,3 +1,4 @@
+import sys
 from pydub import AudioSegment
 
 class ConversorOGG:
@@ -10,6 +11,7 @@ class ConversorOGG:
             
             sound.export(output_file, format='ogg')
             print('Se proceso el archivo: ',output_file)
+            sys.stdout.flush()
             return True
         except:
             print('Error al procesar el archivo: ',output_file)

@@ -7,7 +7,7 @@ from messageBroker.messagebroker import KafkaConsumer
 import datetime
 
 validacion = Validacion()
-class Login(Resource):
+class Login(Resource, object):
     def post(self):
         kafka_consumer_tareas = KafkaConsumer()
         kafka_consumer_tareas.recibirTareas()
