@@ -67,15 +67,17 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1024M
+          cpus: '0.30'
+          memory: 200M
         reservations:
-          memory: 500M
+          cpus: '0.30'
+          memory: 200M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
     - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
     - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000", "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000000", "wsgi:app"]
   api-convertirArchivo:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
@@ -94,15 +96,17 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1024M
+          cpus: '0.40'
+          memory: 400M
         reservations:
-          memory: 500M
+          cpus: '0.40'
+          memory: 400M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
     - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
     - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000", "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000000", "wsgi:app"]
   api-enviarCorreo:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
@@ -121,10 +125,12 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1024M
+          cpus: '0.30'
+          memory: 400M
         reservations:
-          memory: 500M
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000", "wsgi:app"]
+          cpus: '0.30'
+          memory: 400M
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000000", "wsgi:app"]
 networks:
   myapp:
     name: "myapp"
