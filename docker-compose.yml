@@ -68,10 +68,10 @@ services:
       resources:
         limits:
           cpus: '0.30'
-          memory: 200M
+          memory: 40M
         reservations:
           cpus: '0.30'
-          memory: 200M
+          memory: 20M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
@@ -97,10 +97,10 @@ services:
       resources:
         limits:
           cpus: '0.40'
-          memory: 400M
+          memory: 40M
         reservations:
           cpus: '0.40'
-          memory: 400M
+          memory: 70M
     volumes:
     - $PWD/Archivos:/home/flask_app/Archivos
     - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
@@ -126,10 +126,10 @@ services:
       resources:
         limits:
           cpus: '0.30'
-          memory: 400M
+          memory: 40M
         reservations:
           cpus: '0.30'
-          memory: 400M
+          memory: 70M
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000000", "wsgi:app"]
 networks:
   myapp:
