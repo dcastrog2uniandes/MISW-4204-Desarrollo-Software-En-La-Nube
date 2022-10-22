@@ -12,7 +12,7 @@ class ConversorWAV:
                 sound = AudioSegment.from_ogg(filepath)
             
             sound.export(output_file, format='wav')
-            print('Se proceso el archivo: ',output_file, 'hora: ', datetime.datetime.now(), 'tamanio:', os.path.getsize(filepath))
+            #print('Se convirtio el archivo: ',output_file, 'hora: ', datetime.datetime.now(), 'archivo original:',filepath, 'tamanio:', str(float(os.path.getsize(filepath))/1048576) + 'MB')
             sys.stdout.flush()
             return True
         except:
