@@ -24,15 +24,15 @@ class ActualizarTarea(Resource):
         validacion.validacionTareaExistente(response, id_task)
 
         if len(response.errors) == 0:  
-            tarea_actualizar = Tarea.query.filter(Tarea.id == id_task).first()  
-            validacion.validacionFormatoArchivoDestino(response, tarea_actualizar.fileOriginal, request.json['newFormat'] )
-            
+            tarea_actualizar = Tarea.query.filter(Tarea.id == id_task).first() 
+            validacion.validacionFormatoArchivo(response, request.json['newFormat'])
+            validacion.validacionFormatoArchivoDestino(response, tarea_actualizar.fileOriginal, request.json['newFormat'])
+
         if len(response.errors) == 0:
             if tarea_actualizar.status == FileStatus.PROCESSED.name and validacion.validacionExisteArchivo(tarea_actualizar.fileConvertido):
                 eliminarFile = EliminarFile()
                 eliminarFile.eliminar(tarea_actualizar.fileConvertido)
-
-
+                
             name_file = tarea_actualizar.fileConvertido.split('/')[-1].split('.')[-2]
 
             tarea_actualizar.fileConvertido='../Archivos/ArchivoConversion/'+name_file+request.json['newFormat']
