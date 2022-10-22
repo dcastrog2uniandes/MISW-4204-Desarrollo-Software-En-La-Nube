@@ -1,6 +1,6 @@
 import sys
 from pydub import AudioSegment
-
+import datetime
 
 class ConversorWAV:
     def convert_audio_to_wav(self,filepath:str,output_file:str,format:str):
@@ -11,7 +11,7 @@ class ConversorWAV:
                 sound = AudioSegment.from_ogg(filepath)
             
             sound.export(output_file, format='wav')
-            print('Se proceso el archivo: ',output_file)
+            print('Se proceso el archivo: ',output_file, 'hora: ', datetime.datetime.now())
             sys.stdout.flush()
             return True
         except:

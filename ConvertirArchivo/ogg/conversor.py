@@ -1,5 +1,6 @@
 import sys
 from pydub import AudioSegment
+import datetime
 
 class ConversorOGG:
     def convert_audio_to_ogg(self,filepath:str,output_file:str, format):
@@ -10,7 +11,7 @@ class ConversorOGG:
                 sound = AudioSegment.from_mp3(filepath)
             
             sound.export(output_file, format='ogg')
-            print('Se proceso el archivo: ',output_file)
+            print('Se proceso el archivo: ',output_file, 'hora: ', datetime.datetime.now())
             sys.stdout.flush()
             return True
         except:
