@@ -58,8 +58,8 @@ class Validacion:
 
     def validacionTamanioMax(self, response, filepath):
         file_size = os.path.getsize(filepath) 
-        if file_size > 5000000:
-            response.errors += [{"error": {"mensaje": "El archivo excede el tamaño maximo", "codigo": 1010}}]
+        if file_size < 5000000:
+            response.errors += [{"error": {"mensaje": "El archivo debe ser mayor o igual el tamanio", "codigo": 1010}}]
 
     def validacionTareaExistente(self, response, id_task):
         if len(Tarea.query.filter(Tarea.id == id_task).all()) == 0:

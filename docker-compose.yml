@@ -67,16 +67,16 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.30'
+          cpus: '0.10'
           memory: 40M
         reservations:
-          cpus: '0.30'
-          memory: 20M
+          cpus: '0.10'
+          memory: 10M
     volumes:
-    - $PWD/Archivos:/home/flask_app/Archivos
-    - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-    - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-    - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
+      - $PWD/Archivos:/home/flask_app/Archivos
+      - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
+      - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
+      - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000000", "wsgi:app"]
   api-convertirArchivo:
     environment:
@@ -96,16 +96,16 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.40'
-          memory: 40M
+          cpus: '0.50'
+          memory: 200M
         reservations:
-          cpus: '0.40'
-          memory: 70M
+          cpus: '0.50'
+          memory: 20M
     volumes:
-    - $PWD/Archivos:/home/flask_app/Archivos
-    - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-    - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-    - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
+      - $PWD/Archivos:/home/flask_app/Archivos
+      - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
+      - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
+      - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000000", "wsgi:app"]
   api-enviarCorreo:
     environment:
@@ -125,11 +125,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.30'
+          cpus: '0.10'
           memory: 40M
         reservations:
-          cpus: '0.30'
-          memory: 70M
+          cpus: '0.10'
+          memory: 10M
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000000", "wsgi:app"]
 networks:
   myapp:

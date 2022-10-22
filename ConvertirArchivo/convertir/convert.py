@@ -29,7 +29,9 @@ class ConvertirAudio:
             'file_output': tarea['fileConvertido'],
             'tarea': tarea['id']        
             }
-        
+
+        r = None
+
         if extension == '.wav':
             if output_format == '.mp3':
                 r = conversor_mp3.convert_audio_to_mp3(filepath, name_output_file, extension)
@@ -45,7 +47,6 @@ class ConvertirAudio:
         if extension == '.mp3':
             if output_format == '.wav':
                 r = conversor_wav.convert_audio_to_wav(filepath, name_output_file, extension)
-                print('res: ', r)
             if output_format == '.ogg':
                 r = conversor_ogg.convert_audio_to_ogg(filepath, name_output_file, extension)
         
