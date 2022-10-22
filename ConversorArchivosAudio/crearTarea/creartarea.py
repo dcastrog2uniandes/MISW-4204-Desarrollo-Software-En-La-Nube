@@ -14,8 +14,8 @@ tarea_schema = TareaSchema()
 class CrearTarea(Resource):
     @jwt_required()
     def post(self):
-        kafka_consumer_tareas = KafkaConsumer()
-        kafka_consumer_tareas.recibirTareas()
+        # kafka_consumer_tareas = KafkaConsumer()
+        # kafka_consumer_tareas.recibirTareas()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True

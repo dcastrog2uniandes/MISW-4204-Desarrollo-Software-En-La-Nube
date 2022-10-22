@@ -67,10 +67,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.30'
-          memory: 40M
+          cpus: '0.50'
+          memory: 60M
         reservations:
-          cpus: '0.30'
+          cpus: '0.50'
           memory: 20M
     volumes:
       - $PWD/Archivos:/home/flask_app/Archivos

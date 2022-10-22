@@ -13,7 +13,7 @@ class ConversorMP3:
                 sound = AudioSegment.from_wav(filepath)
         
             sound.export(output_file, format='mp3')
-            #print('Se convirtio el archivo: ',output_file, 'hora: ', datetime.datetime.now(), 'archivo original:',filepath, 'tamanio:', str(float(os.path.getsize(filepath))/1048576) + 'MB')
+            print('Se convirtio el archivo: ',output_file, 'hora: ', datetime.datetime.now(), 'archivo original:',filepath, 'tamanio:', str(round(os.path.getsize(filepath)/1024000, 2)) + ' MB')
             sys.stdout.flush()
             return True
         except:
