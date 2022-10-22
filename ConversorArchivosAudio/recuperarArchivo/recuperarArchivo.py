@@ -3,7 +3,6 @@ from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from modelos.modelos import Response, Tarea, FileStatus
 from validacion.validacion import Validacion
-from messageBroker.messagebroker import KafkaConsumer
 import datetime
 import shutil
 
@@ -12,8 +11,6 @@ validacion = Validacion()
 class RecuperarArchivo(Resource):
     @jwt_required()
     def get(self, filename):
-        kafka_consumer_tareas = KafkaConsumer()
-        kafka_consumer_tareas.recibirTareas()
         response = Response()
         response.succeded = False
         response.errors = []

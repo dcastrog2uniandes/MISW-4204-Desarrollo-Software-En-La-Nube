@@ -6,18 +6,14 @@ from validacion.validacion import Validacion
 from messageBroker.messagebroker import KafkaProducer
 from eliminarFile.eliminarFile import EliminarFile 
 import datetime
-import shutil
-from messageBroker.messagebroker import KafkaConsumer
 
 validacion = Validacion()
-kafka_producer = KafkaProducer()
 tarea_schema = TareaSchema()
 
 class ActualizarTarea(Resource):
     @jwt_required()
     def put(self, id_task):
-        kafka_consumer_tareas = KafkaConsumer()
-        kafka_consumer_tareas.recibirTareas()
+        kafka_producer = KafkaProducer()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True
@@ -28,12 +24,9 @@ class ActualizarTarea(Resource):
         validacion.validacionTareaExistente(response, id_task)
 
         if len(response.errors) == 0:  
-            tarea_actualizar = Tarea.query.filter(Tarea.id == id_task).first() 
-             
+            tarea_actualizar = Tarea.query.filter(Tarea.id == id_task).first()  
             validacion.validacionFormatoArchivoDestino(response, tarea_actualizar.fileOriginal, request.json['newFormat'] )
             
-        
-
         if len(response.errors) == 0:
             if tarea_actualizar.status == FileStatus.PROCESSED.name and validacion.validacionExisteArchivo(tarea_actualizar.fileConvertido):
                 eliminarFile = EliminarFile()

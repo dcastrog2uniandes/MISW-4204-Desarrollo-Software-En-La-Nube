@@ -3,19 +3,17 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema, FileStatus
 from validacion.validacion import Validacion
-from messageBroker.messagebroker import KafkaProducer, KafkaConsumer
+from messageBroker.messagebroker import KafkaProducer
 import datetime
 import shutil
 
 validacion = Validacion()
-kafka_producer = KafkaProducer()
 tarea_schema = TareaSchema()
 
 class CrearTarea(Resource):
     @jwt_required()
     def post(self):
-        # kafka_consumer_tareas = KafkaConsumer()
-        # kafka_consumer_tareas.recibirTareas()
+        kafka_producer = KafkaProducer()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True

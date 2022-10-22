@@ -8,7 +8,6 @@ import datetime
 from sqlalchemy import func
 from messageBroker.messagebroker import KafkaConsumer
 
-
 tarea_schema = TareaSchemaGeneral()
 validacion = Validacion()
 
