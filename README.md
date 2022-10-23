@@ -74,18 +74,5 @@ Luego se mostraran las siguientes gráficas con los resultados
 ![graficos](https://user-images.githubusercontent.com/99267339/197371844-7b8159e1-1622-4dba-941f-ed89d98c0cca.png)
 
 
-## Informe Análisis de Capacidad
-.....
-
-## Informe Plan de pruebas
-
-
-## Resultados Ejecución Pruebas de Estrés 
-.....
-
-### Escenario 1
-....
-
-### Escenario 2
-....
-
+## Informes Entrega 1
+[ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
