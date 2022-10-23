@@ -1,4 +1,4 @@
-# MISW4204-202215
+# MISW4204-202215 Grupo 4
 
 ## Conversor de Audio
 
@@ -21,7 +21,7 @@ Los servicios REST expuestos por la aplicación son los siguientes:
 | PUT         | Cambiar formato archivo disponible en la aplicación | Permite cambiar el nuevo formato de conversión de un archivo que esté disponible en la aplicación. Si el estado del proceso de conversión es “processed”, se debe actualizar el estado a “uploaded”, y borrar el archivo procesado anteriormente. El usuario debe proveer el identificador de la tarea, indicar el nuevo formato. Cuando el archivo se termina de procesar se debe notificar al usuario vía correo electrónico                      |
 | DELETE      | Borrar archivos                                     | Permite borrar el archivo original y el archivo convertido de un usuario, si y sólo si el estado del proceso de conversión es Disponible. El usuario debe proveer el identificador de la tarea                                                                                                                                                                                                                                                      |
 
-La documentación de la APIREST se encuentra disponible en una colección de POSTMAN
+La documentación de la APIREST se encuentra disponible en: [API Audio Convert](https://documenter.getpostman.com/view/14552180/2s84DssfrN)
 
 ### Stack técnológico de la APIREST
 
@@ -34,59 +34,53 @@ La documentación de la APIREST se encuentra disponible en una colección de POS
 - **Software conversor de archivos multimedia:** ffmpeg
 - **Pruebas de Estrés:**  JMeter
 
-## Servidor de Desarrollo
+
+## Prerrequisitos
+
+- Una maquina con sistema operativo Ubuntu 22.04 con 4 CPUs y 4GB de RAM
+- [Docker 20.10.20](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04)
+- [Docker Compose 2.3.3](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
+- [Postman](https://www.postman.com/downloads/)
+
+Opcionales
+- Java: desde la terminal ejecutar el comando `sudo apt install -y default-jdk`
+- [offset explorer 2.0](https://www.kafkatool.com/download.html): descargar el instalador para Ubuntu en caso de que desee visualizar los topics del broker de mensajeria Kafka
+- [JMeter 5.5](https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz): descomprimir y ubicarse en la carpeta `../bin` y ejecutar el comando `./jmeter`
 
 
-### Instalar dependencias proyecto flask
-Desde la carpeta raiz ejecutar el comando
-
-```
-pip3 install -r requirements.txt
-```
-
-### Instalar ffmpeg
-
-Es un proyecto de software de código abierto gratuito que consta de un gran conjunto de bibliotecas y programas para manejar video, audio y otros archivos multimedia.
-
-```
-sudo apt-get install ffmpeg 
-```
-
-#### Instalar offset explorer 2.0
-
-Desde la pagina oficial https://www.kafkatool.com/download.html descargar el instalador para Ubuntu
-
-#### Instalar Java
-
-Apache Kafka requiere Java para ejecutarse. Ejecute el siguiente comando para instalar OpenJDK predeterminado en su sistema desde los repositorios oficiales de Ubuntu.
+## Ejecución
+Luego de descargar este código fuente, ubiquese en la raíz del proyecto y ejecute el comando
 
 ```
-sudo apt install -y default-jdk
+./desplegar.sh
 ```
+Este script permite levantar los contenedores de Docker de forma automatizada.
 
-### Levantar los servicios Zookeeper y Kafka 
+### Configurar los Endpoints
+Desde Postman debe importar las coleciones que contienen los endpoints para probar la aplicación, que se encuentran en la carpeta `/collections`. Tener en cuenta que se deben establecer las variables dependiendo del endpoint que se vaya a probar. La imagen muestra el apartado **variables** donde se deben realizar los cambios mencionados.
 
-Desde la carpeta ```/docker``` levantar las imagenes docker con el comando
-```
-docker compose up -d
-```
+![image](https://user-images.githubusercontent.com/99267339/197371565-75e5dcb6-83b8-4514-b5df-94e6d4264e7d.png)
 
-### Levantar Microservicios
-Teniendo en cuenta la arquitectura diseñada, se listas los microservicios y los puertos donde se ejecutan:
+Para mayor información de los endpoints puede consultar la documentación de la [API](https://documenter.getpostman.com/view/14552180/2s84DssfrN)
 
-| Microservicio          | Puerto | Comando                                                       |
-|------------------------|--------|---------------------------------------------------------------|
-| ConversorArchivosAudio | 5000   | ```gunicorn --bind 0.0.0.0:5000 wsgi:ap```                    |
-| ConvertirArchivo       | 5001   | ```gunicorn --bind 0.0.0.0:5001 -w 1 --timeout 600 wsgi:ap``` |
-| EnviarCorreo           | 5002   | ```gunicorn --bind 0.0.0.0:5002 -w 1 --timeout 600 wsgi:ap``` |
+## Visualización de métricas con Grafana
 
-## Análisis de Capacidad
+Una vez desplegada la aplicación, desde el navegador ingresar a la url `http://localhost:3000` y seleccione el siguiente dashboard:
+
+![dashboard](https://user-images.githubusercontent.com/99267339/197371829-a16e4339-bc1e-425c-98d8-9411b82edc00.png)
+
+Luego se mostraran las siguientes gráficas con los resultados
+
+![graficos](https://user-images.githubusercontent.com/99267339/197371844-7b8159e1-1622-4dba-941f-ed89d98c0cca.png)
+
+
+## Informe Análisis de Capacidad
 .....
 
-## Plan de pruebas
-....
+## Informe Plan de pruebas
 
-## Ejecución Pruebas de Estrés 
+
+## Resultados Ejecución Pruebas de Estrés 
 .....
 
 ### Escenario 1
@@ -95,7 +89,3 @@ Teniendo en cuenta la arquitectura diseñada, se listas los microservicios y los
 ### Escenario 2
 ....
 
-
-
-### Resultados
-Se encuentra en un documento disponible en la wiki: Escenario y Pruebas de Estrés API REST y Batch
