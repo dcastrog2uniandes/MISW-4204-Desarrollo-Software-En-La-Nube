@@ -1,0 +1,956 @@
+{
+	"info": {
+		"_postman_id": "51b5cf2b-c56b-4ed4-af9e-5f716272d87d",
+		"name": "Audio Convert",
+		"description": "Documentacion del API para el procesamiento de conversion de archivos de audio. Soporta los formatos de audio:\n\n- MP3\n- OGG\n- WAV\n    \n\nLa API permite a los usuarios subir archivos de audio y solicitar el cambio de formato de estos para descargarlos.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14552180"
+	},
+	"item": [
+		{
+			"name": "SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"your_email@uniandes.edu.co\",\n    \"username\":\"username\",\n    \"password1\":\"your_password\",\n    \"password2\":\"your_password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/auth/signup",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				},
+				"description": "Permite crear una cuenta de usuario, con los campos _usuario_, _correo electrónico_ y _contraseña_. El usuario y el correo electrónico deben ser **únicos** en la plataforma, la contraseña debe seguir unos lineamientos mínimos de seguridad, además debe ser solicitada dos veces para que el usuario confirme que ingresa la contraseña correctamente."
+			},
+			"response": [
+				{
+					"name": "SignUp: User exists",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"your_email@uniandes.edu.co\",\n    \"username\":\"username\",\n    \"password1\":\"your_password\",\n    \"password2\":\"your_password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"El usuario ya se encuentra registrado\",\n                \"codigo\": 1006\n            }\n        },\n        {\n            \"error\": {\n                \"mensaje\": \"El email ya se encuentra registrado\",\n                \"codigo\": 1007\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 21:16:37.806651\",\n    \"hora_fin\": \"2022-10-22 21:16:37.946824\"\n}"
+				},
+				{
+					"name": "SignUp: Create successful",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"your_email@uniandes.edu.co\",\n    \"username\":\"username\",\n    \"password1\":\"your_password\",\n    \"password2\":\"your_password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/auth/signup",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 21:17:58.401234\",\n    \"message\": \"usuario creado exitosamente\",\n    \"hora_fin\": \"2022-10-22 21:17:58.466032\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"username\",\n    \"password\":\"your_password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/auth/login",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "Permite recuperar el token de autorización para consumir los recursos del API suministrando un nombre de usuario y una contraseña correcta de una cuenta registrada."
+			},
+			"response": [
+				{
+					"name": "Login: successful",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"username\",\n    \"password\":\"your_password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 21:06:34.148330\",\n    \"message\": {\n        \"token\": \"eyJ********************\",\n        \"id\": 1\n    },\n    \"hora_fin\": \"2022-10-22 21:06:34.151114\"\n}"
+				},
+				{
+					"name": "Login: wrong password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"username\",\n    \"password\":\"your_password_incorrect\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"Contrasena no valida\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 21:23:54.587606\",\n    \"hora_fin\": \"2022-10-22 21:23:54.589629\"\n}"
+				},
+				{
+					"name": "Login: unregistered user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"username_invalid\",\n    \"password\":\"your_password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"El usuario no se encuentra registrado\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 22:46:03.797701\",\n    \"hora_fin\": \"2022-10-22 22:46:03.799428\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"fileName\":\"../Archivos/ArchivoCliente/Daft_Punk_One_More_Time_2.mp3\",\n    \"newFormat\":\".ogg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/tasks",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"tasks"
+					]
+				},
+				"description": "Permite crear una nueva tarea de conversión de formatos. El usuario requiere autorización."
+			},
+			"response": [
+				{
+					"name": "Create Task: File no exists",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2NjQ3NDcxNiwianRpIjoiMzViN2I0NDAtYzU2NS00YmFjLTg3ZmMtMjlmZmU1ZTExODhlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjY2NDc0NzE2LCJleHAiOjE2NjY0NzU2MTZ9.lTXOS5Xwbn6KGnjQsiuxqrorwMbH07yhOcSOhWQQ9xg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"fileName\":\"../Archivos/ArchivoCliente/audio_2.mp3\",\n    \"newFormat\":\".ogg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Succeeded\": true,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"El archivo no existe\",\n                \"codigo\": 1008\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 21:08:54.485142\",\n    \"hora_fin\": \"2022-10-22 21:08:54.485517\"\n}"
+				},
+				{
+					"name": "Create Task: successful creation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"fileName\":\"../Archivos/ArchivoCliente/Daft_Punk_One_More_Time.mp3\",\n    \"newFormat\":\".ogg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/tasks",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Succeeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:12:20.096858\",\n    \"message\": \"Tarea creada exitosamente\",\n    \"hora_fin\": \"2022-10-22 23:12:20.362598\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"newFormat\":\".wav\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/tasks/{{task_id}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"{{task_id}}"
+					]
+				},
+				"description": "Permite actualizar la información de una tarea en la aplicación, le facilita al usuario actualizar el formato de conversión de un archivo ya disponible en la aplicación. El usuario requiere autorización."
+			},
+			"response": [
+				{
+					"name": "Update Task: successful",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer Enter the token that returns on login",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"newFormat\":\".ogg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/tasks/enter the task id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks",
+								"enter the task id"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Succeeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:17:44.121767\",\n    \"message\": \"Tarea actualizada exitosamente\",\n    \"hora_fin\": \"2022-10-22 23:17:44.191090\"\n}"
+				},
+				{
+					"name": "Update Task: invalid task id",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"newFormat\":\".ogg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/tasks/{{task_id}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"{{task_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Succeeded\": true,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"La tarea con el id 3, no existe\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:18:21.174585\",\n    \"hora_fin\": \"2022-10-22 23:18:21.175669\"\n}"
+				},
+				{
+					"name": "Update Task: same output and input format",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"newFormat\":\".ogg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/tasks/{{id_task}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"{{id_task}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"Succeeded\": true,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"La extension origen es igual a la extension destino\",\n                \"codigo\": 1013\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:19:34.723648\",\n    \"hora_fin\": \"2022-10-22 23:19:34.726215\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all tasks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/tasks?order=1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "1"
+						},
+						{
+							"key": "max",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Permite recuperar todas las tareas de conversión de un usuario autorizado en la aplicación."
+			},
+			"response": [
+				{
+					"name": "Get all tasks: successful",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer Enter the token that returns on login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/tasks?order=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:13:34.659313\",\n    \"message\": [\n        {\n            \"id\": 2,\n            \"newFormat\": \".ogg\",\n            \"status\": \"UPLOADED\",\n            \"fileOriginal\": \"../Archivos/ArchivoOriginal/Daft_Punk_One_More_Time_2.mp3\"\n        },\n        {\n            \"id\": 1,\n            \"newFormat\": \".wav\",\n            \"status\": \"PROCESSED\",\n            \"fileOriginal\": \"../Archivos/ArchivoOriginal/Daft_Punk_One_More_Time_1.mp3\"\n        }\n    ],\n    \"hora_fin\": \"2022-10-22 23:13:34.672775\"\n}"
+				},
+				{
+					"name": "Get all tasks: invalid params",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/tasks",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "max",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"Parametro order no existe\",\n                \"codigo\": 1001\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:14:25.380526\",\n    \"hora_fin\": \"2022-10-22 23:14:25.380591\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Task",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/tasks/{{task_id}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"{{task_id}}"
+					]
+				},
+				"description": "Permite recuperar la información de una tarea en la aplicación. El usuario requiere autorización."
+			},
+			"response": [
+				{
+					"name": "Get Task: successful",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer Enter the token that returns on login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/tasks/enter the task id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks",
+								"enter the task id"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:22:34.993834\",\n    \"message\": {\n        \"id\": 1,\n        \"status\": \"PROCESSED\",\n        \"newFormat\": \".wav\",\n        \"fileOriginal\": \"../Archivos/ArchivoOriginal/Daft_Punk_One_More_Time_1.mp3\",\n        \"fileCliente\": \"../Archivos/ArchivoCliente/Daft_Punk_One_More_Time_1.mp3\",\n        \"fileConvertido\": \"../Archivos/ArchivoConversion/Daft_Punk_One_More_Time_1.wav\",\n        \"timeStamp\": \"2022-10-22T23:12:20.181303\"\n    },\n    \"hora_fin\": \"2022-10-22 23:22:34.996233\"\n}"
+				},
+				{
+					"name": "Get Task: invalid task id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/tasks/{{task_id}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"tasks",
+								"{{task_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"La tarea con el id 4, no existe\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:24:00.397886\",\n    \"hora_fin\": \"2022-10-22 23:24:00.399104\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/tasks/{{task_id}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"{{task_id}}"
+					]
+				},
+				"description": "Permite eliminar una tarea en la aplicación. El usuario requiere autorización."
+			},
+			"response": [
+				{
+					"name": "Delete Task: invalid task id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2NjQ3NDcxNiwianRpIjoiMzViN2I0NDAtYzU2NS00YmFjLTg3ZmMtMjlmZmU1ZTExODhlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjY2NDc0NzE2LCJleHAiOjE2NjY0NzU2MTZ9.lTXOS5Xwbn6KGnjQsiuxqrorwMbH07yhOcSOhWQQ9xg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/tasks/enter the task id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks",
+								"enter the task id"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"La tarea con el id 4, no existe\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:26:09.871937\",\n    \"hora_fin\": \"2022-10-22 23:26:09.873232\"\n}"
+				},
+				{
+					"name": "Delete Task: successful",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer Enter the token that returns on login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/tasks/enter the task id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"tasks",
+								"enter the task id"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:27:44.432005\",\n    \"message\": {\n        \"menssage\": \"Se elimino la tarea 1 correctamente\"\n    },\n    \"hora_fin\": \"2022-10-22 23:27:44.498606\"\n}"
+				}
+			]
+		},
+		{
+			"name": "File Recovery",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{protocol}}://{{ip}}/api/files/{{file_name}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"api",
+						"files",
+						"{{file_name}}"
+					]
+				},
+				"description": "Permite recuperar el archivo original o procesado"
+			},
+			"response": [
+				{
+					"name": "File Recovery: successful",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer Enter the token that returns on login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/files/enter the file name: file_name.mp3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"files",
+								"enter the file name: file_name.mp3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": true,\n    \"errors\": [],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:32:59.591154\",\n    \"message\": \"El archivo fue recuperado en la ruta ../Archivos/ArchivoCliente/Daft_Punk_One_More_Time_2.mp3\",\n    \"hora_fin\": \"2022-10-22 23:32:59.724063\"\n}"
+				},
+				{
+					"name": "File Recovery: file does not exist",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{ip}}/api/files/{{file_name}}",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"{{file_name}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"succeded\": false,\n    \"errors\": [\n        {\n            \"error\": {\n                \"mensaje\": \"El archivo Daft_Punk_One_More_ime_2.mp3 no fue encontrado\",\n                \"codigo\": 404\n            }\n        }\n    ],\n    \"Estado\": \"PROCESSED\",\n    \"hora_inicio\": \"2022-10-22 23:34:34.457274\",\n    \"hora_fin\": \"2022-10-22 23:34:34.458878\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ip",
+			"value": "localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "protocol",
+			"value": "http",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJ***",
+			"type": "string"
+		},
+		{
+			"key": "task_id",
+			"value": "{{1}}",
+			"type": "string"
+		},
+		{
+			"key": "file_name",
+			"value": "{{file_name.mp3}}",
+			"type": "string"
+		}
+	]
+}
