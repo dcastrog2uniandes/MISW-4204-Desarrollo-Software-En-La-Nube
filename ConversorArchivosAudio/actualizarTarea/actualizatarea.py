@@ -25,7 +25,7 @@ class ActualizarTarea(Resource):
 
         if len(response.errors) == 0:  
             tarea_actualizar = Tarea.query.filter(Tarea.id == id_task).first() 
-            validacion.validacionFormatoArchivo(response, request.json['newFormat'])
+            validacion.validacionFormatoActualizado(response, request.json['newFormat'])
             validacion.validacionFormatoArchivoDestino(response, tarea_actualizar.fileOriginal, request.json['newFormat'])
 
         if len(response.errors) == 0:

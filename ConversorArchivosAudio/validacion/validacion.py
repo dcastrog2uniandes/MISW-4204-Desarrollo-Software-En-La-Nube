@@ -56,6 +56,11 @@ class Validacion:
         if extension not in formats:
             response.errors += [{"error": {"mensaje": "El formato no es valido", "codigo": 1009}}]
 
+    def validacionFormatoActualizado(self, response, formato_request):
+        formats = ['.wav','.ogg','.mp3']
+        if formato_request not in formats:
+            response.errors += [{"error": {"mensaje": "El formato no es valido", "codigo": 1009}}]
+
     def validacionTamanioMax(self, response, filepath):
         file_size = os.path.getsize(filepath) 
         if file_size < 5000000:
