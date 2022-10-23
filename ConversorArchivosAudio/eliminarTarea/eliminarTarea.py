@@ -33,8 +33,9 @@ class EliminarTarea(Resource):
         eliminarFile = EliminarFile()
         if tarea.status == FileStatus.PROCESSED:
             validacion.validacionExisteArchivo(responseFile, tarea.fileConvertido)
-
+            validacion.validacionExisteArchivo(responseFile, tarea.fileOriginal)
             if len(responseFile.errors) == 0:
                 eliminarFile.eliminar(tarea.fileConvertido)
-
+                eliminarFile.eliminar(tarea.fileOriginal)
             return responseFile.errors
+

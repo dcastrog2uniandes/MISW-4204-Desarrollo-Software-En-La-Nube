@@ -29,7 +29,7 @@ class ActualizarTarea(Resource):
             validacion.validacionFormatoArchivoDestino(response, tarea_actualizar.fileOriginal, request.json['newFormat'])
 
         if len(response.errors) == 0:
-            if tarea_actualizar.status == FileStatus.PROCESSED.name and validacion.validacionExisteArchivo(tarea_actualizar.fileConvertido):
+            if validacion.validacionExisteArchivoActualizar(tarea_actualizar.fileConvertido):
                 eliminarFile = EliminarFile()
                 eliminarFile.eliminar(tarea_actualizar.fileConvertido)
                 
