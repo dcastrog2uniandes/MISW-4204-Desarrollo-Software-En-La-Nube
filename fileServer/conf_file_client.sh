@@ -9,4 +9,5 @@ sudo mkdir -p /nfs/home
 sudo mount 10.128.0.9:/var/nfs/Archivos /nfs/Archivos
 sudo mount 10.128.0.9:/home /nfs/home
 
+cp -r ../Archivos/* /nfs/Archivos
 df -h
