@@ -2,7 +2,7 @@ version: "3.5"
 services:
   api-enviarCorreo:
     environment:
-      - SERVER_KAFKA=myapp-kafka:9092
+      - SERVER_KAFKA=10.128.0.2:9092
     container_name: api-enviarCorreo
     image: api_enviar_correo:1
     build:
@@ -10,7 +10,5 @@ services:
       dockerfile: Dockerfile-EnviarCorreo
     ports:
       - "5002:5002"
-    links: 
-      - kafka
     restart: always
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000000", "wsgi:app"]
+    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5002", "-w", "1", "--timeout", "1000000", "wsgi:app"]

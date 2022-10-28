@@ -16,7 +16,7 @@ RUN apk upgrade -U \
     && apk add ca-certificates ffmpeg libva-intel-driver \
     && rm -rf /var/cache/*
 
-COPY ../../ConvertirArchivo ./
+COPY ConvertirArchivo ./
 
 COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh

@@ -13,8 +13,6 @@ apt-cache policy docker-ce
 
 sudo apt install docker-ce
 
-sudo systemctl status docker
-
 sudo usermod -aG docker ${USER}
 
 id -nG
@@ -26,3 +24,5 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 
 docker-compose --version
+
+sudo restart
