@@ -28,8 +28,12 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 docker-compose --version
 
-echo "Instalar nginx"
+# echo "Instalar nginx"
 
-sudo apt install nginx -y
+# sudo apt install nginx -y
 
-sudo restart
+# sudo cp default /etc/nginx/sites-available
+
+# sudo systemctl restart nginx
+
+sudo reboot -f
