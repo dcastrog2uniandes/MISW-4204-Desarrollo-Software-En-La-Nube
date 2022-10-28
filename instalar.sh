@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+
+echo "Instalar docker"
+
 sudo apt update
 
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
@@ -11,7 +14,7 @@ sudo apt update
 
 apt-cache policy docker-ce
 
-sudo apt install docker-ce
+sudo apt install docker-ce -y
 
 sudo usermod -aG docker ${USER}
 
@@ -24,5 +27,9 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 
 docker-compose --version
+
+echo "Instalar nginx"
+
+sudo apt install nginx -y
 
 sudo restart
