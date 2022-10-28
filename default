@@ -23,15 +23,16 @@ server {
         server_name localhost;
         error_log  /tmp/nginx.error.log notice;
         access_log   /tmp/nginx.access.log;
-        location / {
-         rewrite_log on;
-         rewrite ^.*/(\d+)/(\d+)/(\d+.*)$ /$1/$2/$3 break;
+        
+        location /api/ {
+          rewrite_log on;
+          rewrite ^.*/(\d+)/(\d+)/(\d+.*)$ /$1/$2/$3 break;
 
-         proxy_intercept_errors on;
-         error_page 404 = @dynamiccycletour;
-         proxy_set_header Host $http_host;
-         proxy_pass http://127.0.0.1:5000;
-  }
+          proxy_intercept_errors on;
+          error_page 404 = @dynamiccycletour;
+          proxy_set_header Host $http_host;
+          proxy_pass http://127.0.0.1:5000;
+        }
 }
 
 # Virtual Host configuration for example.com
