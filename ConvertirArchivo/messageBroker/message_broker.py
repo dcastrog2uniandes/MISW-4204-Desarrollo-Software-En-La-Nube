@@ -19,6 +19,7 @@ class KafkaConsumer():
     def recibirTareas(self):
         convertidor_audio = ConvertirAudio()
         for t in self.consumer:
+            print("Procesando: " + t.value)
             convertidor_audio.convert_manage(t.value)
             
 
