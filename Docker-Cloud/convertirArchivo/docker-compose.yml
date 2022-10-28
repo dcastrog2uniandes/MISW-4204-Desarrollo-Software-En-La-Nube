@@ -12,8 +12,8 @@ services:
       - "5001:5001"
     restart: always
     volumes:
-      - $PWD/Archivos:/home/flask_app/Archivos
-      - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-      - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-      - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
+      - /nfs/Archivos:/home/flask_app/Archivos
+      - /nfs/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
+      - /nfs/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
+      - /nfs/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
     command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000000", "wsgi:app"]
