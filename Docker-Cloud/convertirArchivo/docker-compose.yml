@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  api-convertirArchivo:
+    environment:
+      - SERVER_KAFKA=myapp-kafka:9092
+    container_name: api-convertirArchivo
+    image: api_convertir_archivo:1
+    build:
+      context: ./
+      dockerfile: Dockerfile-ConvertirArchivo
+    ports:
+      - "5001:5001"
+    links: 
+      - kafka
+    restart: always
+    volumes:
+      - $PWD/../../Archivos:/home/flask_app/Archivos
+      - $PWD/../../Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
+      - $PWD/../../Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
+      - $PWD/../../Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000000", "wsgi:app"]

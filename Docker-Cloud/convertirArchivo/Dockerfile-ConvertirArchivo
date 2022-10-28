@@ -1,0 +1,24 @@
+FROM python:3.10-alpine
+
+RUN mkdir -p /home/flask_app/Archivos
+RUN mkdir -p /home/flask_app/Archivos/ArchivoCliente
+RUN mkdir -p /home/flask_app/Archivos/ArchivoConversion
+RUN mkdir -p /home/flask_app/Archivos/ArchivoOriginal
+
+RUN mkdir -p /home/flask_app/ConvertirArchivo
+WORKDIR /home/flask_app/ConvertirArchivo
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add --update bash && rm -rf /var/cache/apk/*
+
+RUN apk upgrade -U \ 
+    && apk add ca-certificates ffmpeg libva-intel-driver \
+    && rm -rf /var/cache/*
+
+COPY ../../ConvertirArchivo ./
+
+COPY wait-for-it.sh wait-for-it.sh
+RUN chmod +x wait-for-it.sh
+
+ENV FLASK_APP app.py
