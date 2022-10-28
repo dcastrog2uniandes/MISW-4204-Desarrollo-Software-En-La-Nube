@@ -14,3 +14,4 @@ marshmallow-enum==1.5.1
 pydub==0.25.1
 gevent==22.10.1
 prometheus-flask-exporter==0.20.3
+wheel
