@@ -13,7 +13,6 @@ tarea_schema = TareaSchema()
 class CrearTarea(Resource):
     @jwt_required()
     def post(self):
-        kafka_producer = KafkaProducer()
         id_usuario = get_jwt_identity()
         response = Response()
         response.Succeeded = True
@@ -48,7 +47,7 @@ class CrearTarea(Resource):
                                 'email': usuario_tarea.email
                            }
                 }
-
+            kafka_producer = KafkaProducer()
             kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
 
         response.hora_fin = str(datetime.datetime.now())
