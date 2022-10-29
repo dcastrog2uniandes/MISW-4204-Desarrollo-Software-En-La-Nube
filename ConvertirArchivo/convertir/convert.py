@@ -11,8 +11,7 @@ class ConvertirAudio:
         conversor_wav = ConversorWAV()
         conversor_mp3 = ConversorMP3()
         conversor_ogg = ConversorOGG()
-        kafka_producer = KafkaProducerRespuestas()
-
+    
         tarea = object['tarea']
         usuario = object['usuario']
         
@@ -50,6 +49,7 @@ class ConvertirAudio:
             if output_format == '.ogg':
                 r = conversor_ogg.convert_audio_to_ogg(filepath, name_output_file, extension)
         
+        kafka_producer = KafkaProducerRespuestas()
         if r:
             tarea['status'] = 'PROCESSED'
             kafka_producer.enviarNotificacion('Notificar', str(tarea['id']), mensaje)
