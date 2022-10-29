@@ -12,3 +12,5 @@
 /home               10.128.0.6(rw,sync,no_root_squash,no_subtree_check)
 /var/nfs/Archivos    10.128.0.4(rw,sync,no_subtree_check)
 /home               10.128.0.4(rw,sync,no_root_squash,no_subtree_check)
+/var/nfs/Archivos    10.128.0.7(rw,sync,no_subtree_check)
+/home               10.128.0.7(rw,sync,no_root_squash,no_subtree_check)
