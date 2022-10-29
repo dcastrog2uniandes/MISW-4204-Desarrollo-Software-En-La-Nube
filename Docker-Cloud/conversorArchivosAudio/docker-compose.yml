@@ -24,6 +24,12 @@ services:
   api-conversorArchivosAudio:
     environment:
       - SERVER_KAFKA=10.128.0.2:9092
+      - ISCONTAINER=True
+      - PASSWORD=admin123456
+      - PUBLIC_IP_ADDRESS=34.27.228.33
+      - DBNAME=conversorAudio
+      - PROJECT_ID=grupo4-cloud-366900
+      - INSTANCE_NAME=bd-conversor-audio
     container_name: api-conversorArchivosAudio
     image: api_conversor_archivos_audio:1
     build:
