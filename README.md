@@ -75,6 +75,9 @@ Seguir los siguientes pasos en orden.
 * Ejcutar mv Docker-Cloud/enviarCorreo/* .
 * Ejecutar docker-compose up --build -d
 
+## Informes Entrega 2
+[ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
+
 # Entrega 1
 ## Conversor de Audio
 
