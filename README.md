@@ -1,5 +1,81 @@
 # MISW4204-202215 Grupo 4
 
+# Entrega 2
+## Pasos para montar la aplicacion en la nube:
+
+### 1. Selecciones las VM de google y desplieguelas de acuerdo a las siguientes especificaciones:
+
+![image](https://user-images.githubusercontent.com/98563858/198889390-98bc1462-c7ca-44d0-9b5c-5f97d540f2d9.png)
+
+NOTA: Para la api api-conversor-archivos, se debe agregar en el firewall que permita trafico externo por el puerto 80 y que asigne una IP publica.
+para todas las API se debe establecer ip fijas de acuerdo a la imagen.
+
+![image](https://user-images.githubusercontent.com/98563858/198889441-513bf67f-7e36-47cb-b447-274368fb7e10.png)
+
+### Una vez de creeen las VM se deben seguir los siguientes pasos:
+* Ingresar a cada una de esta siguiendo las instrucciones de google para tala fin, SSH, gcloud console, etc.
+
+Seguir los siguientes pasos en orden.
+
+### Configurar servicio de CLOUD SQL
+* Crear una instancia de mySQL.
+* Permitir llamados de la UP publica, colocar la IP publica de api-conversor-archivos
+
+### Configurar  el servidor file-server-NFS
+* Ingresar a la VM.
+* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
+* Ejecutar ./conf_file_host.sh
+
+### Configurar VM de myapp-kafka
+* Ingresar a la VM.
+* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejecutar ./instalar.sh
+* la maquina se reinicia
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/Docker-Cloud/Kafka/
+* Ejecutar docker-compose up --build -d
+
+### Configurar VM de api-conversor-archivos
+* Ingresar a la VM.
+* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
+* Ejecutar ./conf_file_cliente.sh
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejecutar sudo apt install nginx -y
+* Ejecutar sudo cp default /etc/nginx/sites-available
+* Ejecutar sudo systemctl restart nginx
+* Ejecutar ./instalar.sh
+* la maquina se reinicia
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejcutar mv Docker-Cloud/conversorArchivosAudio/* .
+* Ejecutar docker-compose up --build -d
+
+### Configurar VM de api-convertir-archivos
+* Ingresar a la VM.
+* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
+* Ejecutar ./conf_file_cliente.sh
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejecutar ./instalar.sh
+* la maquina se reinicia
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejcutar mv Docker-Cloud/convertirArchivo/* .
+* Ejecutar docker-compose up --build -d
+
+### Configurar VM de api-enviar-correo
+* Ingresar a la VM.
+* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
+* Ejecutar ./conf_file_cliente.sh
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejecutar ./instalar.sh
+* la maquina se reinicia
+* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
+* Ejcutar mv Docker-Cloud/enviarCorreo/* .
+* Ejecutar docker-compose up --build -d
+
+# Entrega 1
 ## Conversor de Audio
 
 Back-end de una aplicación web tipo APIREST que permite a los usuarios subir archivos de audio y solicitar el cambio de formato de estos para descargarlos. La aplicación permite a un usuario registrarse con un correo electronico, usuario y contraseña. Debido a que no se cuenta con un front-end, se utiliza POSTMAN para probar cada uno de los endpoints del APIREST. La aplicación permite el procesamiento de conversión de archivos de audio para los siguientes 3 formatos:
