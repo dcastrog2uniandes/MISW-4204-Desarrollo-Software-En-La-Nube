@@ -17,7 +17,8 @@ para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
 ## Una vez se creen las VM, debe ingresar a cada una (vía SSH o gcloud console) y siga los siguientes pasos en **orden**.
 
 ### 1. Configurar servicio de _Cloud SQL_
-* Crear una instancia de MySQL. Configúrela para que permita llamados de la IP pública de la _api-conversor-archivos_
+1. Crear una instancia de MySQL. Configúrela para que permita llamados de la IP pública de la _api-conversor-archivos_
+2. Cree una base de datos con el nombre `conversorAudio`
 
 ### 2. Configurar el servidor _file-server-nfs_
 1. Ingresar a la VM.
@@ -37,17 +38,27 @@ para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
 ### 4. Configurar VM _api-conversor-archivos_
 1. Ingresar a la VM.
 2. Ejecutar `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
-3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
-4. Ejecutar `./conf_file_client.sh`
-5. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
-6. Ejecutar `sudo apt install nginx -y`
-7. Ejecutar `sudo cp default /etc/nginx/sites-available`
-8. Ejecutar `sudo systemctl restart nginx`
-9. Ejecutar `./instalar.sh`
-10. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
-11. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
-12. Ejecutar `mv Docker-Cloud/conversorArchivosAudio/* .`
-13. Ejecutar `docker-compose up --build -d`
+3. Editar el archivo `docker-compose.yml` que se encuentra en `cd /MISW-4204-DesarrolloNube`. Cambie las variables `PUBLIC_IP_ADDRESS` y `PROJECT_ID` de acuerdo con la ip publica generada al instanciar la VM y el id del proyecto, respectivamente. 
+
+      ```
+      ...
+      api-conversorArchivosAudio:
+        environment:
+          - PUBLIC_IP_ADDRESS=xx.xxx.xxx.xx
+          - PROJECT_ID=id-proyecto-gcp
+      ...
+      ```
+4. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
+5. Ejecutar `./conf_file_client.sh`
+6. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+7. Ejecutar `sudo apt install nginx -y`
+8. Ejecutar `sudo cp default /etc/nginx/sites-available`
+9. Ejecutar `sudo systemctl restart nginx`
+10. Ejecutar `./instalar.sh`
+11. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
+12. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+13. Ejecutar `mv Docker-Cloud/conversorArchivosAudio/* .`
+14. Ejecutar `docker-compose up --build -d`
 
 ### 5. Configurar VM _api-convertir-archivos_
 1. Ingresar a la VM.
