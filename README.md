@@ -1,84 +1,83 @@
 # MISW4204-202215 Grupo 4
 
-# Entrega 2
-## Pasos para montar la aplicacion en la nube:
+# Entrega 2 - Sistema Conversión Cloud - Despliegue Básico en la Nube Pública
+## Pasos para desplegar la aplicación en la nube de Google:
 
-### 1. Selecciones las VM de google y desplieguelas de acuerdo a las siguientes especificaciones:
+### 1. Cree instancias de VM en la consola de GCP y desplieguelas de acuerdo a las siguientes especificaciones:
 
-![image](https://user-images.githubusercontent.com/98563858/198889390-98bc1462-c7ca-44d0-9b5c-5f97d540f2d9.png)
+![instancias](https://user-images.githubusercontent.com/99267339/200622912-5258d142-6d06-4ff0-9955-48a06209f8ca.png)
 
-NOTA: Para la api api-conversor-archivos, se debe agregar en el firewall que permita trafico externo por el puerto 80 y que asigne una IP publica.
-para todas las API se debe establecer ip fijas de acuerdo a la imagen.
 
-![image](https://user-images.githubusercontent.com/98563858/198889441-513bf67f-7e36-47cb-b447-274368fb7e10.png)
+**NOTA:** Para la api **api-conversor-archivos**, se debe agregar en el _firewall_ que permita tráfico externo por el puerto `80` y que asigne una IP pública.
+para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
 
-### Una vez de creeen las VM se deben seguir los siguientes pasos:
-* Ingresar a cada una de esta siguiendo las instrucciones de google para tala fin, SSH, gcloud console, etc.
+![console](https://user-images.githubusercontent.com/99267339/200617740-4532d328-2fb5-4e7e-8775-e18fd7154ae5.png)
 
-Seguir los siguientes pasos en orden.
 
-### Configurar servicio de CLOUD SQL
-* Crear una instancia de mySQL.
-* Permitir llamados de la UP publica, colocar la IP publica de api-conversor-archivos
+## Una vez se creen las VM, debe ingresar a cada una (vía SSH o gcloud console) y siga los siguientes pasos en **orden**.
 
-### Configurar  el servidor file-server-NFS
-* Ingresar a la VM.
-* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
-* Ejecutar ./conf_file_host.sh
+### 1. Configurar servicio de _Cloud SQL_
+* Crear una instancia de MySQL. Configúrela para que permita llamados de la IP pública de la _api-conversor-archivos_
 
-### Configurar VM de myapp-kafka
-* Ingresar a la VM.
-* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejecutar ./instalar.sh
-* la maquina se reinicia
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/Docker-Cloud/Kafka/
-* Ejecutar docker-compose up --build -d
+### 2. Configurar el servidor _file-server-nfs_
+1. Ingresar a la VM.
+2. Ejecutar el comando `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
+3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
+4. Ejecutar `./conf_file_host.sh`
 
-### Configurar VM de api-conversor-archivos
-* Ingresar a la VM.
-* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
-* Ejecutar ./conf_file_cliente.sh
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejecutar sudo apt install nginx -y
-* Ejecutar sudo cp default /etc/nginx/sites-available
-* Ejecutar sudo systemctl restart nginx
-* Ejecutar ./instalar.sh
-* la maquina se reinicia
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejcutar mv Docker-Cloud/conversorArchivosAudio/* .
-* Ejecutar docker-compose up --build -d
+### 3. Configurar VM _myapp-kafka_
+1. Ingresar a la VM.
+2. Ejecutar el comando `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
+3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+4. Ejecutar `./instalar.sh`
+5. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
+6. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/Docker-Cloud/Kafka/`
+7. Ejecutar `docker-compose up --build -d`
 
-### Configurar VM de api-convertir-archivos
-* Ingresar a la VM.
-* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
-* Ejecutar ./conf_file_cliente.sh
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejecutar ./instalar.sh
-* la maquina se reinicia
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejcutar mv Docker-Cloud/convertirArchivo/* .
-* Ejecutar docker-compose up --build -d
+### 4. Configurar VM _api-conversor-archivos_
+1. Ingresar a la VM.
+2. Ejecutar `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
+3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
+4. Ejecutar `./conf_file_client.sh`
+5. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+6. Ejecutar `sudo apt install nginx -y`
+7. Ejecutar `sudo cp default /etc/nginx/sites-available`
+8. Ejecutar `sudo systemctl restart nginx`
+9. Ejecutar `./instalar.sh`
+10. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
+11. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+12. Ejecutar `mv Docker-Cloud/conversorArchivosAudio/* .`
+13. Ejecutar `docker-compose up --build -d`
 
-### Configurar VM de api-enviar-correo
-* Ingresar a la VM.
-* Escribir git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git y enter.
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube/fileServer
-* Ejecutar ./conf_file_cliente.sh
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejecutar ./instalar.sh
-* la maquina se reinicia
-* Ingresar a la carpeta cd /MISW-4204-DesarrolloNube
-* Ejcutar mv Docker-Cloud/enviarCorreo/* .
-* Ejecutar docker-compose up --build -d
+### 5. Configurar VM _api-convertir-archivos_
+1. Ingresar a la VM.
+2. Ejecutar `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
+3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
+4. Ejecutar `./conf_file_client.sh`
+5. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+6. Ejecutar `./instalar.sh`
+7. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
+8. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+9. Ejecutar `mv Docker-Cloud/convertirArchivo/* .`
+10. Ejecutar `docker-compose up --build -d`
+
+### 6. Configurar VM _api-enviar-correo_
+1. Ingresar a la VM.
+2. Ejecutar `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
+3. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube/fileServer`
+4. Ejecutar `./conf_file_client.sh`
+5. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+6. Ejecutar `./instalar.sh`
+7. En este punto la maquina se reinicia, debe volver a restablecer la conexión (SSH o gcloud console)
+8. Ingresar a la carpeta `cd /MISW-4204-DesarrolloNube`
+9. Ejecutar `mv Docker-Cloud/enviarCorreo/* .`
+10. Ejecutar `docker-compose up --build -d`
 
 ## Informes Entrega 2
 [ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
 
-# Entrega 1
+# Entrega 1 - Sistema Conversión Cloud - Entorno Tradicional
+
 ## Conversor de Audio
 
 Back-end de una aplicación web tipo APIREST que permite a los usuarios subir archivos de audio y solicitar el cambio de formato de estos para descargarlos. La aplicación permite a un usuario registrarse con un correo electronico, usuario y contraseña. Debido a que no se cuenta con un front-end, se utiliza POSTMAN para probar cada uno de los endpoints del APIREST. La aplicación permite el procesamiento de conversión de archivos de audio para los siguientes 3 formatos:
@@ -113,8 +112,8 @@ La documentación de la APIREST se encuentra disponible en: [API Audio Convert](
 - **Software conversor de archivos multimedia:** ffmpeg
 - **Pruebas de Estrés:**  JMeter
 
-
-## Prerrequisitos
+## Pasos para desplegar la aplicación en un ambiente local
+### Prerrequisitos
 
 - Una maquina con sistema operativo Ubuntu 22.04 con 4 CPUs y 4GB de RAM
 - [Docker 20.10.20](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04)
@@ -127,7 +126,7 @@ Opcionales
 - [JMeter 5.5](https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz): descomprimir y ubicarse en la carpeta `../bin` y ejecutar el comando `./jmeter`
 
 
-## Ejecución
+### Ejecución
 Luego de descargar este código fuente, ubiquese en la raíz del proyecto y ejecute el comando
 
 ```
@@ -135,14 +134,14 @@ Luego de descargar este código fuente, ubiquese en la raíz del proyecto y ejec
 ```
 Este script permite levantar los contenedores de Docker de forma automatizada.
 
-### Configurar los Endpoints
+#### Configurar los Endpoints
 Desde Postman debe importar las coleciones que contienen los endpoints para probar la aplicación, que se encuentran en la carpeta `/collections`. Tener en cuenta que se deben establecer las variables dependiendo del endpoint que se vaya a probar. La imagen muestra el apartado **variables** donde se deben realizar los cambios mencionados.
 
 ![image](https://user-images.githubusercontent.com/99267339/197371565-75e5dcb6-83b8-4514-b5df-94e6d4264e7d.png)
 
 Para mayor información de los endpoints puede consultar la documentación de la [API](https://documenter.getpostman.com/view/14552180/2s84DssfrN)
 
-## Visualización de métricas con Grafana
+### Visualización de métricas con Grafana
 
 Una vez desplegada la aplicación, desde el navegador ingresar a la url `http://localhost:3000` y seleccione el siguiente dashboard:
 
@@ -153,5 +152,5 @@ Luego se mostraran las siguientes gráficas con los resultados
 ![graficos](https://user-images.githubusercontent.com/99267339/197371844-7b8159e1-1622-4dba-941f-ed89d98c0cca.png)
 
 
-## Informes Entrega 1
+### Informes Entrega 1
 [ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
