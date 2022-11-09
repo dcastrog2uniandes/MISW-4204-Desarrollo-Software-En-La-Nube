@@ -18,7 +18,16 @@ para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
 
 ### 1. Configurar servicio de _Cloud SQL_
 1. Crear una instancia de MySQL. Configúrela para que permita llamados de la IP pública de la _api-conversor-archivos_
-2. Cree una base de datos con el nombre `conversorAudio`
+      * id de instancia: `bd-conversor-audio`
+      * contraseña: `admin123456`
+      * configuracion: `development`
+      * ip pública: `xx.xxx.xxx.xx` (ip pública api-conversor-archivos)
+      * versión: `MySQL 8.0`
+      
+2. Cree una base de datos con el nombre `conversorAudio` 
+      
+3. Verificar la conexión a la base de datos. Desde la terminal de `gcloud` ejecute el comando `gcloud sql connect bd-conversor-audio --user=root`
+4. Escribir la contraseña y verifique que se abra el shell de MySQL
 
 ### 2. Configurar el servidor _file-server-nfs_
 1. Ingresar a la VM.
@@ -38,7 +47,7 @@ para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
 ### 4. Configurar VM _api-conversor-archivos_
 1. Ingresar a la VM.
 2. Ejecutar `git clone https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube.git`
-3. Editar el archivo `docker-compose.yml` que se encuentra en `cd /MISW-4204-DesarrolloNube`. Cambie las variables `PUBLIC_IP_ADDRESS` y `PROJECT_ID` de acuerdo con la ip publica generada al instanciar la VM y el id del proyecto, respectivamente. 
+3. Editar el archivo `docker-compose.yml` que se encuentra en `cd /MISW-4204-DesarrolloNube`. Cambie las variables `PUBLIC_IP_ADDRESS` y `PROJECT_ID` de acuerdo con la ip pública de la **base de datos** y el **id del proyecto**, respectivamente. 
 
       ```
       ...
