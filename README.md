@@ -5,13 +5,24 @@
 
 ### 1. Cree instancias de VM en la consola de GCP y desplieguelas de acuerdo a las siguientes especificaciones:
 
-![instancias](https://user-images.githubusercontent.com/99267339/200622912-5258d142-6d06-4ff0-9955-48a06209f8ca.png)
+| API - Microservicio    | Servicio     | Serie | Tipo maquina              | Disco de Arranque       | IP           |
+|------------------------|--------------|-------|---------------------------|-------------------------|--------------|
+| api-conversor-archivos* | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.6   |
+| api-convertir-archivo  | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.4   |
+| api-enviar-correo      | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.5   |
+| file-server-nfs        | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.9   |
+| myapp-kafka            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.2   |
+| jmeter-test            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.7   |
+| bd-conversor-audior**    | Cloud SQL    | MySQL | 4 vCPU                    | 26GB / 100GB SSD        | 34.27.228.33 |
 
+**Zona:** us-central1-a
 
-**NOTA:** Para la api **api-conversor-archivos**, se debe agregar en el _firewall_ que permita tráfico externo por el puerto `80` y que asigne una IP pública.
-para todas las API se debe establecer IP fijas de acuerdo a la siguiente imagen.
+*_firewall_ que permita tráfico externo por el puerto `80` y que asigne una IP pública.
 
-![console](https://user-images.githubusercontent.com/99267339/200617740-4532d328-2fb5-4e7e-8775-e18fd7154ae5.png)
+**Permite llamados de la IP pública de la _api-conversor-archivos_
+
+Todas las instancias de VM debe tener IP fijas (ip efimera personalizada) de acuerdo a la tabla.
+
 
 
 ## Una vez se creen las VM, debe ingresar a cada una (vía SSH o gcloud console) y siga los siguientes pasos en **orden**.
