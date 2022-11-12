@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "voltaic-inn-367919",
+  "private_key_id": "fbb610e9eb93edf35c8dddbd23f60dffc4d2bbff",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDbimKoO195zjYe\nX3jri4+rMbFVJ6O6JbmaQ7BoSr03K8rOHVyy4BknsJDQQimJT+j3POCXpfAg2RTj\nlv2AIfmjV/Ual7XoN4br/Vo2ywsBp/R2mp41GVv8zcYJj4xnnmSAS1N39LPxAEo2\nuCr+MvpXrmb26xa9nBk17bUazq10h1EIIco69lCI8NS0zd4Eb8mrt1NySgM1u/4m\nMJjGa7cXKZA8fko/w1P3LY1dRUkYkUuSrUItnvGgU6MAsJSU1o49l7sGs+klVSnH\nrqKl2hyZDUsgJbpSMk+op+yqrgUVFnUW25NGPG/aQLcVdJessuTGhxH6xdmy9kk9\n9wMyRfHfAgMBAAECggEARmOhyyeyLncf4fAhcIAgMbbukQtzEslqr1vZkS65aRmI\n3joK0S1J03BoleVItQZifvbNWcHx8k43xNrR74W1KRqX8w1GXSyEfWCPTrceEctc\ndbSQWh0F4dHGF6WnUke2GG5OVk0mbnR11wKIglUs7/TyfWOVuHh2mtRatzwh4BS0\nigoRso+ZuFajzLd8XtzLy0NN9qvtkJkT5f6wkJ/LIN3dws+zXi0MlTAvIzxEl+JD\nKg/m16WNgQVPFNVs1dVG7+e/S4ahfmt8EofZHw0PXrl5Uw/hLA6N+E2t33mQnJyV\nC0cxd4L9OTM+m2y/WPZ7AfIFpZB2s9DPINoGpY/78QKBgQD31Bfwk+kJCUWt7pG5\nQoqT05IChwRPozlhhk6/qigyVK9EybJDGjWPPlCbajvwiUNB9nSpBnBqvxqW9vZj\nCo8t0klNlWZ8HlxPCOqV5yPfMKjnse01oLIUgPI/GodpKxelVLwI23fxO27KKwiz\nHLvu8An96Q3nMateGGmJzWj9EQKBgQDix4PcwGhZ/+q/B6SoA+VcV7PyzD4wB5uG\nzCL/RUGEeK8Z8iFjMtQTHkdw2D8q29E2tvTUiiKaj5XYbAouL8Y8vQXpF8fwrbSz\nnMs63aSTPcC0yJl7VNICuWH3A40TMqXMjLoymQ7puIbqaoSElJJxZqiNmIfZy0f+\nyLoNeVK/7wKBgBmkc1msJDeQIwqNHbzaerYy9O+YAsUusVg66lkAhSo4Au6OJAi3\nZIVOwE5kXpFT0oa3tnhqtyUEYv7tzK6QwCHQmU8Sv0jmZ0yyMnuSL+7+/OsESPP8\njZB7ixUmbI5gLBEqRE5yTuXB7YOzkjHeLj/ZzF7eR1b9l6qjwf/FJjDRAoGAKvsP\nZdZdsLkNP7luHp3maZMBuwG0w5udgXXNKD5zBW1uGmfGpitrAFibx6pkhnX09/7C\n9klb95lBGCyZ3VkWpEpbBWuJbHcvqV8NMZHycCmjDWB7nmFcEEIcbBmTMlFGFTeS\nzqYtqmRbxa/8f7g87Rs81OFU1hVuBr76bDVTVqcCgYAcIJsMEeHJbenHJ4E6oKEA\n69jlLpEOK6Ah3G0DIPkCeJzoHH05nh7WnAQ/069K/Upf50sX/h9TLpB7Aw6XqXBj\nOjXD0EjpDdr1kz8kwlCudAz1IWxrmAibs1MAUDCYbO41qVu0tnX6bcpF+HlUHIyB\nupPR+D3ZmuSCY5UrxqVd8g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloudstorage@voltaic-inn-367919.iam.gserviceaccount.com",
+  "client_id": "115499213066799086376",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudstorage%40voltaic-inn-367919.iam.gserviceaccount.com"
+}
