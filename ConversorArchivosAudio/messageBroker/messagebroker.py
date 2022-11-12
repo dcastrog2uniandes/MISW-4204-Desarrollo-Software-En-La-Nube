@@ -3,7 +3,7 @@ from kafka import KafkaProducer, KafkaConsumer
 from actualizarEstado.actualizarEstado import ActualizarEstado
 import os
 
-class KafkaProducer():
+class KafkaProducerCliente:
     server = os.environ.get('SERVER_KAFKA', None)
     if server == None:
         server = 'localhost:9092'
@@ -17,7 +17,7 @@ class KafkaProducer():
         self.producer.send(topic, key=bytes(keys, 'utf-8'), value = mensaje)
         self.producer.flush()
 
-class KafkaConsumer():
+class KafkaConsumerCliente:
     server = os.environ.get('SERVER_KAFKA', None)
     if server == None:
         server = 'localhost:9092'

@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required
 from modelos.modelos import Response, Tarea, TareaSchema, FileStatus
 from validacion.validacion import Validacion
 import datetime
-from messageBroker.messagebroker import KafkaConsumer
+from messageBroker.messagebroker import KafkaConsumerCliente
 
 tarea_schema = TareaSchema()
 validacion = Validacion()
@@ -11,7 +11,7 @@ validacion = Validacion()
 class ObtenerTarea(Resource):
     @jwt_required()
     def get(self, id_task):
-        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas = KafkaConsumerCliente()
         kafka_consumer_tareas.recibirTareas()
         response = Response()
         response.succeded = False

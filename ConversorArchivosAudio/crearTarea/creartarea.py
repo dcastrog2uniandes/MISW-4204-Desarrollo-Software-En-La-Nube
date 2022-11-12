@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema, FileStatus
 from validacion.validacion import Validacion
-from messageBroker.messagebroker import KafkaProducer
+from messageBroker.messagebroker import KafkaProducerCliente
 import datetime
 from googleStorage.googleStorage import GoogleStorage
 import os
@@ -60,7 +60,7 @@ class CrearTarea(Resource):
                                 'email': usuario_tarea.email
                            }
                 }
-            kafka_producer = KafkaProducer()
+            kafka_producer = KafkaProducerCliente()
             kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
 
         response.hora_fin = str(datetime.datetime.now())

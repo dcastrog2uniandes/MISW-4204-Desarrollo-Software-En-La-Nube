@@ -6,7 +6,7 @@ from modelos.modelos import db, Usuario , Response, Tarea, TareaSchemaGeneral, F
 from validacion.validacion import Validacion
 import datetime
 from sqlalchemy import func
-from messageBroker.messagebroker import KafkaConsumer
+from messageBroker.messagebroker import KafkaConsumerCliente
 
 tarea_schema = TareaSchemaGeneral()
 validacion = Validacion()
@@ -14,7 +14,7 @@ validacion = Validacion()
 class ObtenerTareas(Resource):
     @jwt_required()
     def get(self):
-        kafka_consumer_tareas = KafkaConsumer()
+        kafka_consumer_tareas = KafkaConsumerCliente()
         kafka_consumer_tareas.recibirTareas()
         id_usuario = get_jwt_identity()
         response = Response()
