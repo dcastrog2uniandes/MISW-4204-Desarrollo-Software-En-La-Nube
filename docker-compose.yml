@@ -1,5 +1,22 @@
 version: "3.5"
 services:
+  db:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'miltong24'
+      MYSQL_PASSWORD: 'admin123456'
+      MYSQL_ROOT_PASSWORD: 'admin123456'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - "myapp"
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v2.2.1
@@ -52,12 +69,16 @@ services:
   api-conversorArchivosAudio:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
-      - ISCONTAINER=True
       - PASSWORD=admin123456
-      - PUBLIC_IP_ADDRESS=34.27.228.33
-      - DBNAME=conversorAudio
+      - PUBLIC_IP_ADDRESS=mysql
+      - DBNAME=conversor
       - PROJECT_ID=grupo4-cloud-366900
       - INSTANCE_NAME=bd-conversor-audio
+      - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
+      - GOOGLE_APPLICATION_BUCKET_FOLDER__ORIGINAL_NAME=ArchivoOriginal/
+      - GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME=ArchivoConversion/
+      - RUTA_ARCHIVO_CLIENTE=../Archivos/ArchivoCliente/
     container_name: api-conversorArchivosAudio
     image: api_conversor_archivos_audio:1
     build:
@@ -81,12 +102,12 @@ services:
     volumes:
       - $PWD/Archivos:/home/flask_app/Archivos
       - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-      - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-      - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "60", "wsgi:app"]
+    command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000", "wsgi:app"]
   api-convertirArchivo:
     environment:
       - SERVER_KAFKA=myapp-kafka:9092
+      - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
     container_name: api-convertirArchivo
     image: api_convertir_archivo:1
     build:
@@ -107,11 +128,6 @@ services:
         reservations:
           cpus: '0.50'
           memory: 20M
-    volumes:
-      - $PWD/Archivos:/home/flask_app/Archivos
-      - $PWD/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-      - $PWD/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-      - $PWD/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
     command: ["./wait-for-it.sh", "myapp-kafka:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5001", "-w", "1", "--timeout", "1000000", "wsgi:app"]
   api-enviarCorreo:
     environment:
@@ -150,3 +166,7 @@ networks:
           aux_addresses:
             kafka: 10.5.0.2
             zookeeper: 10.5.0.3
+            db: 10.5.0.4
+
+volumes:
+  my-db:

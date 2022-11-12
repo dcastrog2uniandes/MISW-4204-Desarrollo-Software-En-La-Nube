@@ -3,6 +3,8 @@ services:
   api-convertirArchivo:
     environment:
       - SERVER_KAFKA=10.128.0.2:9092
+      - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
     container_name: api-convertirArchivo
     image: api_convertir_archivo:1
     build:
@@ -11,9 +13,4 @@ services:
     ports:
       - "5001:5001"
     restart: always
-    volumes:
-      - /nfs/Archivos:/home/flask_app/Archivos
-      - /nfs/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-      - /nfs/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-      - /nfs/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000000", "wsgi:app"]
+    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "120", "wsgi:app"]

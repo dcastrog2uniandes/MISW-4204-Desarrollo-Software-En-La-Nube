@@ -17,3 +17,7 @@ prometheus-flask-exporter==0.20.3
 wheel
 mysqlclient==2.1.1
 mysql-connector==2.2.9
+google-cloud>=0.27.0
+google-cloud-core>=0.27.1
+google-cloud-datastore>=1.3.0
+google-cloud-storage>=1.4.0

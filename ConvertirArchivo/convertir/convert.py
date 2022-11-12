@@ -1,24 +1,30 @@
 import os
+from googleStorage.googleStorage import GoogleStorage
 
 from mp3.conversor import ConversorMP3
 from ogg.conversor import ConversorOGG
 from wav.conversor import ConversorWAV
 from messageBroker.message_broker_envio import KafkaProducerRespuestas
 
+ruta_archivo_original = '../Archivos/ArchivoOriginal/'
+ruta_archivo_conversor = '../Archivos/ArchivoConversion/'
 
 class ConvertirAudio:
-    def convert_manage(self,object):
+    def convert_manage(self, object):
         conversor_wav = ConversorWAV()
         conversor_mp3 = ConversorMP3()
         conversor_ogg = ConversorOGG()
     
         tarea = object['tarea']
         usuario = object['usuario']
+
+        googleStorage = GoogleStorage()
+        googleStorage.download_file_from_bucket(tarea['fileOriginal'], ruta_archivo_original + tarea['fileOriginal'].split('/')[-1])
         
         output_format = tarea['newFormat']
-        filepath = tarea['fileOriginal']
+        filepath = ruta_archivo_original + tarea['fileOriginal'].split('/')[-1]
         root, extension = os.path.splitext(filepath)
-        name_output_file = tarea['fileConvertido']
+        name_output_file = ruta_archivo_conversor + tarea['fileConvertido'].split('/')[-1]
 
         mensaje = {
             'user': usuario['id'],
@@ -57,5 +63,12 @@ class ConvertirAudio:
             tarea['status'] = 'FAILED'
 
         kafka_producer.enviarRespuesta('Respuesta',str(tarea['id']),tarea)
+
+        googleStorage.upload_to_bucket(tarea['fileConvertido'], name_output_file)
+
+        os.remove(filepath)
+        os.remove(name_output_file)
+
+
         
         

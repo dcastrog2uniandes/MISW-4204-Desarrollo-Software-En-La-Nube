@@ -5,7 +5,16 @@ from modelos.modelos import Usuario, db, Response, Tarea, TareaSchema, FileStatu
 from validacion.validacion import Validacion
 from messageBroker.messagebroker import KafkaProducer
 import datetime
-import shutil
+from googleStorage.googleStorage import GoogleStorage
+import os
+
+folder_original_name = os.environ.get('GOOGLE_APPLICATION_BUCKET_FOLDER_NAME', None)
+if folder_original_name is None:
+    folder_original_name = 'ArchivoOriginal/'
+
+folder_conversion_name = os.environ.get('GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME', None)
+if folder_conversion_name is None:
+    folder_conversion_name = 'ArchivoConversion/'
 
 validacion = Validacion()
 tarea_schema = TareaSchema()
@@ -32,11 +41,15 @@ class CrearTarea(Resource):
             validacion.validacionFormatoArchivoDestino(response, request.json['fileName'], request.json['newFormat'] )
 
         if len(response.errors) == 0:
-            ruta_destino = shutil.move(request.json['fileName'], '../Archivos/ArchivoOriginal')
+            ruta_destino = request.json['fileName']
+            googleStorage = GoogleStorage()
+            
             name_file = ruta_destino.split('/')[-1].split('.')[-2]
+            googleStorage.upload_to_bucket(folder_original_name + ruta_destino.split('/')[-1], ruta_destino)
+            os.remove(ruta_destino)
             usuario_tarea = Usuario.query.filter( Usuario.id == int(id_usuario)).first()
             
-            nueva_tarea = Tarea(fileCliente=request.json['fileName'], fileConvertido='../Archivos/ArchivoConversion/'+name_file+request.json['newFormat'], fileOriginal=ruta_destino, newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=id_usuario)
+            nueva_tarea = Tarea(fileCliente=request.json['fileName'], fileConvertido = folder_conversion_name + name_file + request.json['newFormat'], fileOriginal=folder_original_name + ruta_destino.split('/')[-1], newFormat=request.json['newFormat'], status=FileStatus.UPLOADED.name, usuario=id_usuario)
             db.session.add(nueva_tarea)
             db.session.commit()
             response.message = "Tarea creada exitosamente"

@@ -1,7 +1,7 @@
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
+from googleStorage.googleStorage import GoogleStorage
 from modelos.modelos import db, Response, Tarea, TareaSchema, FileStatus
-from eliminarFile.eliminarFile import EliminarFile
 import datetime
 from validacion.validacion import Validacion
 tarea_schema = TareaSchema()
@@ -18,7 +18,8 @@ class EliminarTarea(Resource):
         validacion.validacionTareaExistente(response, id_task)
         if len(response.errors) == 0:
             tarea = Tarea.query.filter(Tarea.id == id_task).first()
-            response. errors = response.errors + self.__eliminarFile__(tarea)
+            self.__eliminarFile__(tarea)
+            #response.errors = response.errors + self.__eliminarFile__(tarea)
             db.session.delete(tarea)
             db.session.commit()
             response.message = {"menssage": "Se elimino la tarea {} correctamente".format(id_task)}
@@ -28,14 +29,11 @@ class EliminarTarea(Resource):
         return response.__dict__
 
     def __eliminarFile__(self, tarea):
-        responseFile = Response()
-        responseFile.errors = []
-        eliminarFile = EliminarFile()
-        if tarea.status == FileStatus.PROCESSED:
-            validacion.validacionExisteArchivo(responseFile, tarea.fileConvertido)
-            validacion.validacionExisteArchivo(responseFile, tarea.fileOriginal)
-            if len(responseFile.errors) == 0:
-                eliminarFile.eliminar(tarea.fileConvertido)
-                eliminarFile.eliminar(tarea.fileOriginal)
-            return responseFile.errors
+        googleStorage = GoogleStorage()
 
+        if validacion.validacionExisteArchivoActualizar(tarea.fileOriginal):
+            googleStorage.del_file_to_bucket(tarea.fileOriginal)
+
+        if validacion.validacionExisteArchivoActualizar(tarea.fileConvertido):
+            googleStorage.del_file_to_bucket(tarea.fileConvertido)
+        

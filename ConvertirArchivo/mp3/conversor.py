@@ -5,7 +5,7 @@ import datetime
 import os
 
 class ConversorMP3:
-    def convert_audio_to_mp3(self, filepath:str,output_file:str, format:str):
+    def convert_audio_to_mp3(self, filepath:str, output_file:str, format:str):
         try: 
             if format == '.ogg':
                 sound = AudioSegment.from_ogg(filepath)

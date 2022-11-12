@@ -1,5 +1,21 @@
 # MISW4204-202215 Grupo 4
 
+## Entrega 3 - Sistema Conversión Cloud - escalabilidad en la capa web
+
+https://console.cloud.google.com/apis/library?project=IdProyecto
+
+Se debe habilitar las siguientes API`s de Google 
+
+1. Cloud Storage JSON API
+2. Cloud Storage
+
+Se debe crear las credenciales para el consumo de la API`s.
+
+Genere las credenciales en formato json y guardelo en la carpeta Key con el nombre credencial_google.json
+
+
+
+
 # Entrega 2 - Sistema Conversión Cloud - Despliegue Básico en la Nube Pública
 ## Pasos para desplegar la aplicación en la nube de Google:
 

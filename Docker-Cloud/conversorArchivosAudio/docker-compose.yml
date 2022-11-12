@@ -30,6 +30,11 @@ services:
       - DBNAME=conversorAudio
       - PROJECT_ID=grupo4-cloud-366900
       - INSTANCE_NAME=bd-conversor-audio
+      - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
+      - GOOGLE_APPLICATION_BUCKET_FOLDER__ORIGINAL_NAME=ArchivoOriginal/
+      - GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME=ArchivoConversion/
+      - RUTA_ARCHIVO_CLIENTE=../Archivos/ArchivoCliente/
     container_name: api-conversorArchivosAudio
     image: api_conversor_archivos_audio:1
     build:
@@ -41,6 +46,4 @@ services:
     volumes:
       - /nfs/Archivos:/home/flask_app/Archivos
       - /nfs/Archivos/ArchivoCliente:/home/flask_app/Archivos/ArchivoCliente
-      - /nfs/Archivos/ArchivoConversion:/home/flask_app/Archivos/ArchivoConversion
-      - /nfs/Archivos/ArchivoOriginal:/home/flask_app/Archivos/ArchivoOriginal
-    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "1000000", "wsgi:app"]
+    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "120", "wsgi:app"]

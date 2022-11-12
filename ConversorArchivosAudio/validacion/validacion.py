@@ -1,5 +1,5 @@
-import numbers
 import re
+from googleStorage.googleStorage import GoogleStorage
 from modelos.modelos import db, Usuario, Tarea
 import os
 
@@ -99,7 +99,8 @@ class Validacion:
             response.errors += [{"error": {"mensaje": "Existe un archivo con este nombre en el destinio", "codigo": 1012}}]
 
     def validacionExisteArchivoActualizar(self, filepath):
-        return os.path.exists(filepath)
+        googleStorage = GoogleStorage()
+        return googleStorage.val_file_to_bucket(filepath)
         
     def validacionFormatoArchivoDestino(self, response, filepath, newFormat):
         root, extension = os.path.splitext(filepath)

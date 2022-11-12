@@ -9,6 +9,7 @@ RUN mkdir -p /home/flask_app/conversorArchivosAudio
 WORKDIR /home/flask_app/conversorArchivosAudio
 
 COPY requirements.txt ./
+COPY /key/credencial_google.json ./
 
 RUN apk update \
     && apk add --virtual build-deps gcc python3-dev musl-dev \

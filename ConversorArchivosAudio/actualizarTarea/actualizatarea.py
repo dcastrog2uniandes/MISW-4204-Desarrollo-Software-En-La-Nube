@@ -6,9 +6,15 @@ from validacion.validacion import Validacion
 from messageBroker.messagebroker import KafkaProducer
 from eliminarFile.eliminarFile import EliminarFile 
 import datetime
+from googleStorage.googleStorage import GoogleStorage
+import os
 
 validacion = Validacion()
 tarea_schema = TareaSchema()
+
+folder_conversion_name = os.environ.get('GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME', None)
+if folder_conversion_name is None:
+    folder_conversion_name = 'ArchivoConversion/'
 
 class ActualizarTarea(Resource):
     @jwt_required()
@@ -30,12 +36,12 @@ class ActualizarTarea(Resource):
 
         if len(response.errors) == 0:
             if validacion.validacionExisteArchivoActualizar(tarea_actualizar.fileConvertido):
-                eliminarFile = EliminarFile()
-                eliminarFile.eliminar(tarea_actualizar.fileConvertido)
+                googleStorage = GoogleStorage()
+                googleStorage.del_file_to_bucket(tarea_actualizar.fileConvertido)
                 
             name_file = tarea_actualizar.fileConvertido.split('/')[-1].split('.')[-2]
 
-            tarea_actualizar.fileConvertido='../Archivos/ArchivoConversion/'+name_file+request.json['newFormat']
+            tarea_actualizar.fileConvertido = folder_conversion_name + name_file + request.json['newFormat']
             tarea_actualizar.newFormat=request.json['newFormat']
             tarea_actualizar.status=FileStatus.PROCESSED.name
             db.session.commit()
