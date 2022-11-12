@@ -1,19 +1,72 @@
 # MISW4204-202215 Grupo 4
 
-## Entrega 3 - Sistema Conversión Cloud - escalabilidad en la capa web
+# Entrega 3 - Sistema Conversión Cloud - Escalabilidad en la Capa Web
 
-https://console.cloud.google.com/apis/library?project=IdProyecto
+En el proyecto se debe habilitar las siguientes [APIs de Google](https://console.cloud.google.com/apis/library?project=IdProyecto):
 
-Se debe habilitar las siguientes API`s de Google 
+1. `Cloud Storage JSON API`
+2. `Cloud Storage`
 
-1. Cloud Storage JSON API
-2. Cloud Storage
+Se debe crear las credenciales para el consumo de la APIs.
 
-Se debe crear las credenciales para el consumo de la API`s.
+Genere las credenciales en formato `json` y guardelo en la carpeta `/Key` con el nombre `credencial_google.json`
 
-Genere las credenciales en formato json y guardelo en la carpeta Key con el nombre credencial_google.json
+## Pasos para configurar Autoescalamiento de la Capa Web
+
+### Crear imagen
+Se debe crear una imagen de arranque con un disco de origen basado en la `api-conversor-archivos` para la creación dinámica de instancias al momento de realizar AutoScalling. Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _almacenamiento_ -> _imagenes_ -> y _crear nueva imagen_ con la siguiente especificaciones:
+
+| Campo              | Valor                    |
+|--------------------|--------------------------|
+| origen             | Disco                    |
+| Disco origen       | api-conversor-archivos   |
+| Ubicación          | Regional                 |
+| Seleccionar región | us-central1 (lowa)       |
+
+### Crear plantilla de instancia
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Plantillas de instancia_ y _Crear Plantillas de Intancias_ con las siguientes especificaciones:
+
+| Campo             | Valor                                                                |
+|-------------------|----------------------------------------------------------------------|
+| Serie             | N1                                                                   |
+| Tipo de Maquina   | f1-micro (1 vCPU / 614MB)                                            |
+| Disco de arranque | imagen personalizada (seleccionar imagen creada en el paso anterior) |
 
 
+### Crear Grupo de Instancias (MIG)
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Grupo de Instancias_ -> _Crear Grupo de Instancias_ -> _New Managed Instance Group (stateless)_ e ingrese la siguiente configuración:
+
+| Campo                       | Valor                                              |
+|-----------------------------|----------------------------------------------------|
+| nombre                      | _nombre-grupo_                                     |
+| Instance template           | Seleccionar el template creado en el paso anterior |
+| Ubicación                   | Zona única                                         |
+| Región                      | us-central1- (lowa)                                |
+| Zona                        | us-central1-a                                      |
+| Número minimo de instancias | 1                                                  |
+| Número máximo de instancias | 3                                                  |
+| Autoscaling Metrics         | Agregar las métricas deseadas                      |
+| Periodo de Inactividad      | 120s                                               |
+| Agregar Puerto              | 80                                                 |
+
+
+### Crear red VPC
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Red de VPC_ -> _Redes de VPC_ y _Crear Red de VPC_ 
+
+### Crear Balanceador de Carga
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Servicios de red_ -> _Balanceo de cargas_ -> _Crear Balanceador de Cargas_ -> _Balanceador de cargas HTTP(S)_
+
+* Orientado a Internet o solo interno: 
+* Global o Regional: 
+
+
+
+#### Crear servicio de back-end
+
+#### Crear estado
+
+### Agregar Servicio de Monitoring
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Monitoring_ -> _Descripción general_ -> _Instalar un agente_ -> _Configurar agentes_ y seleccionar la(s) instancia(s) en las que se va a instalar este servicio. Finalmente click en _Instalar el Agente de Operaciones_
 
 
 # Entrega 2 - Sistema Conversión Cloud - Despliegue Básico en la Nube Pública
