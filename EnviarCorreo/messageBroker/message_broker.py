@@ -11,7 +11,7 @@ class KafkaConsumerCliente:
         
         consumer = KafkaConsumer (
             'Notificar',
-            bootstrap_servers = ['10.128.0.2:9092'],
+            bootstrap_servers = [server],
             value_deserializer=lambda m: loads(m.decode('utf-8')),
             auto_offset_reset='earliest',
             auto_commit_interval_ms=1000

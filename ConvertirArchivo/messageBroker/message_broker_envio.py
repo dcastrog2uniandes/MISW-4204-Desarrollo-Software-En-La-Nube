@@ -8,7 +8,7 @@ class KafkaProducerRespuestas():
         server = 'localhost:9092'
     
     producer = KafkaProducer(
-        bootstrap_servers = ['10.128.0.2:9092'],
+        bootstrap_servers = [server],
         value_serializer=lambda m: dumps(m).encode('utf-8')
     )
     
