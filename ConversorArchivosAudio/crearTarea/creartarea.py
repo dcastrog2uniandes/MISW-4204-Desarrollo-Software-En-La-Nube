@@ -60,6 +60,8 @@ class CrearTarea(Resource):
                                 'email': usuario_tarea.email
                            }
                 }
+            print(json_response)
+            print(str(nueva_tarea.id))
             kafka_producer = KafkaProducerCliente()
             kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
 
