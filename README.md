@@ -1,5 +1,13 @@
 # MISW4204-202215 Grupo 4
 
+Pasos del NFS automatico
+
+sudo chmod u+x start.sh
+sudo cp start.sh /etc/init/d
+cd /etc/rc2.d
+sudo ln -s /etc/init.d/start.sh
+sudo mv test.sh S70start.sh
+
 # Entrega 3 - Sistema Conversión Cloud - Escalabilidad en la Capa Web
 
 En el proyecto se debe habilitar las siguientes [APIs de Google](https://console.cloud.google.com/apis/library?project=IdProyecto):
