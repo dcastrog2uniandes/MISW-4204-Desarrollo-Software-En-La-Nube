@@ -1,4 +1,4 @@
-from json import json, dumps, loads
+import json
 from kafka import KafkaProducer, KafkaConsumer
 from actualizarEstado.actualizarEstado import ActualizarEstado
 import os
