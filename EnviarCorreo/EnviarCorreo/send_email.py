@@ -3,7 +3,7 @@ from email.message import EmailMessage
 
 class EnviarNotificacion:
     def send_email_notification(self,m):
-
+        print('Va a preparar el correo')
         body = """
             <!DOCTYPE html>
                 <head>
