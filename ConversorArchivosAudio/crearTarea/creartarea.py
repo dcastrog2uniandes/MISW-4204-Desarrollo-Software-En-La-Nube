@@ -62,8 +62,8 @@ class CrearTarea(Resource):
                 }
             print(json_response)
             print(str(nueva_tarea.id))
-            kafka_producer = KafkaProducerCliente()
-            kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
+            kafka_producer = KafkaProducerCliente('Tareas')
+            kafka_producer.enviarTarea(json_response)
 
         response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

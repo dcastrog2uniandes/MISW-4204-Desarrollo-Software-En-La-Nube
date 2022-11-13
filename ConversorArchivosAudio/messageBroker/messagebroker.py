@@ -1,35 +1,47 @@
-from json import dumps, loads
+from json import json, dumps, loads
 from kafka import KafkaProducer, KafkaConsumer
 from actualizarEstado.actualizarEstado import ActualizarEstado
 import os
 
 class KafkaProducerCliente:
-    server = os.environ.get('SERVER_KAFKA', None)
-    if server == None:
-        server = 'localhost:9092'
+    def __init__(self, topic):
+        server = os.environ.get('SERVER_KAFKA', None)
+        if server == None:
+            server = 'localhost:9092'
 
-    producer = KafkaProducer(
-            bootstrap_servers = ['10.128.0.2:9092'],
-            value_serializer=lambda m: dumps(m).encode('utf-8')
-        )
-    
-    def enviarTarea(self, topic, keys, mensaje):
-        self.producer.send(topic, key=bytes(keys, 'utf-8'), value = mensaje)
-        self.producer.flush()
-
+        self.topic = topic
+        self.producer = KafkaProducer(bootstrap_servers=server,
+                                      value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+        
+    def enviarTarea(self, mensaje):
+        self.producer.send(self.topic, value=mensaje)
+        
 class KafkaConsumerCliente:
-    server = os.environ.get('SERVER_KAFKA', None)
-    if server == None:
-        server = 'localhost:9092'
+    def __init__(self, topic):
+        server = os.environ.get('SERVER_KAFKA', None)
+        if server == None:
+            server = 'localhost:9092'
+        self._consumer = KafkaConsumer( topic,
+                                        bootstrap_servers=server,
+                                        value_deserializer=lambda x: json.loads(x.decode('utf-8')),
+                                        auto_offset_reset='earliest',
+                                        enable_auto_commit=True,
+                                        consumer_timeout_ms=1000,
+                                        group_id='nflx')
 
-    consumer = KafkaConsumer(
-        'Respuesta',
-        bootstrap_servers = ['10.128.0.2:9092'],
-        value_deserializer=lambda m: loads(m.decode('utf-8')),
-        auto_offset_reset='earliest',
-        enable_auto_commit=True,
-        consumer_timeout_ms=1000
-    )
+        self.data = []
+
+    @property
+    def consumer(self):
+        return self._consumer
+
+    @consumer.setter
+    def consumer(self, value):
+        if isinstance(value, KafkaConsumer):
+            self._consumer = value
+
+    def star_read(self):
+        self.recibirTareas()
     
     def recibirTareas(self):
         actualizar_estado = ActualizarEstado()

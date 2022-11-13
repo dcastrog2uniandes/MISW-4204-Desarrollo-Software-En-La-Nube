@@ -1,3 +1,4 @@
+import sys
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from modelos.modelos import Response, Tarea, TareaSchema, FileStatus
@@ -11,8 +12,8 @@ validacion = Validacion()
 class ObtenerTarea(Resource):
     @jwt_required()
     def get(self, id_task):
-        kafka_consumer_tareas = KafkaConsumerCliente()
-        kafka_consumer_tareas.recibirTareas()
+        kafka_consumer_tareas = KafkaConsumerCliente('Respuesta')
+        kafka_consumer_tareas.star_read()
         response = Response()
         response.succeded = False
         response.errors = []
