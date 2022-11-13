@@ -53,3 +53,5 @@ class EnviarNotificacion:
         # Detener la conexión al servidor
         server.quit()
 
+        print('Se envio el correo con exito')
+
