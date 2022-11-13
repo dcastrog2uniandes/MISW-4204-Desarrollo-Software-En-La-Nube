@@ -9,7 +9,7 @@ class KafkaProducerCliente:
         server = 'localhost:9092'
 
     producer = KafkaProducer(
-            bootstrap_servers = server,
+            bootstrap_servers = ['10.128.0.2:9092'],
             value_serializer=lambda m: dumps(m).encode('utf-8')
         )
     
@@ -24,8 +24,7 @@ class KafkaConsumerCliente:
 
     consumer = KafkaConsumer(
         'Respuesta',
-        group_id='my-group',
-        bootstrap_servers = server,
+        bootstrap_servers = ['10.128.0.2:9092'],
         value_deserializer=lambda m: loads(m.decode('utf-8')),
         auto_offset_reset='earliest',
         enable_auto_commit=True,
