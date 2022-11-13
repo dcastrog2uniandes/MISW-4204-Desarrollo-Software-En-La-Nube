@@ -14,8 +14,8 @@ validacion = Validacion()
 class ObtenerTareas(Resource):
     @jwt_required()
     def get(self):
-        kafka_consumer_tareas = KafkaConsumerCliente('Respuesta')
-        kafka_consumer_tareas.star_read()
+        kafka_consumer_tareas = KafkaConsumerCliente()
+        kafka_consumer_tareas.recibirTareas()
         id_usuario = get_jwt_identity()
         response = Response()
         response.succeded = False
