@@ -28,8 +28,7 @@ class KafkaConsumerCliente:
         value_deserializer=lambda m: loads(m.decode('utf-8')),
         auto_offset_reset='earliest',
         enable_auto_commit=True,
-        consumer_timeout_ms=1000,
-        auto_commit_interval_ms=1000,
+        consumer_timeout_ms=1000
     )
     
     def recibirTareas(self):

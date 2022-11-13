@@ -11,11 +11,9 @@ from eliminarTarea.eliminarTarea import EliminarTarea
 from login.login import Login
 from actualizarTarea.actualizatarea import ActualizarTarea
 from recuperarArchivo.recuperarArchivo import RecuperarArchivo
-from prometheus_flask_exporter import RESTfulPrometheusMetrics
 import os
 
 app = Flask(__name__)
-metrics = RESTfulPrometheusMetrics.for_app_factory()
 
 ISCONTAINER = os.environ.get('ISCONTAINER', None)
 PASSWORD = os.environ.get('PASSWORD', None)
@@ -56,10 +54,3 @@ api.add_resource(ObtenerTarea, '/api/tasks/<int:id_task>')
 api.add_resource(EliminarTarea, '/api/tasks/<int:id_task>')
 api.add_resource(RecuperarArchivo, '/api/files/<filename>')
 jwt = JWTManager(app)
-
-
-# and later
-metrics.init_app(app, api)
-metrics.summary('test_by_status', 'Test Request latencies by status', labels={
-                    'code': lambda r: r.status_code
-                })

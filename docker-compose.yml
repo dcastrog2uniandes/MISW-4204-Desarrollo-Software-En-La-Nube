@@ -17,40 +17,6 @@ services:
       - my-db:/var/lib/mysql
     networks:
       - "myapp"
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:v2.2.1
-    volumes:
-      - ./provisioning/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - "myapp"
-    depends_on:
-      - api-conversorArchivosAudio
-    ports:
-      - 9090:9090
-  grafana:
-    image: grafana/grafana:5.1.0
-    container_name: grafana
-    volumes:
-      - ./provisioning/grafana/config.ini:/etc/grafana/grafana.ini
-      - ./provisioning/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/default.yaml
-      - ./provisioning/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/default.yaml
-      - ./provisioning/grafana/dashboards:/var/lib/grafana/dashboards
-    ports:
-      - 3000:3000
-    networks:
-      - "myapp"
-    depends_on:
-      - prometheus
-  zookeeper:
-    image: "bitnami/zookeeper:latest"
-    container_name: "myapp-zookeeper"
-    networks:
-      - "myapp"
-    ports:
-      - "2181:2181"
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
     image: bitnami/kafka:2.5.0
     container_name: "myapp-kafka"
