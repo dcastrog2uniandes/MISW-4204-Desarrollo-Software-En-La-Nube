@@ -9,7 +9,6 @@ class KafkaProducerCliente:
         server = 'localhost:9092'
 
     producer = KafkaProducer(
-            group_id='my-group-kafka',
             bootstrap_servers = server,
             value_serializer=lambda m: dumps(m).encode('utf-8')
         )
