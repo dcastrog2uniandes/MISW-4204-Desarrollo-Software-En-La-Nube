@@ -3,13 +3,13 @@ from kafka import KafkaConsumer
 from EnviarCorreo.send_email import EnviarNotificacion
 import os
 
-class KafkaConsumer():
+class KafkaConsumerCliente:
     def enviarNotificacion(self):
         server = os.environ.get('SERVER_KAFKA', None)
         if server == None:
             server = 'localhost:9092'
         
-        consumer = KafkaConsumer(
+        consumer = KafkaConsumer (
             'Notificar',
             bootstrap_servers = [server],
             value_deserializer=lambda m: loads(m.decode('utf-8')),
