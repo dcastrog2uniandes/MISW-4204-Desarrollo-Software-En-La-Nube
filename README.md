@@ -7,9 +7,9 @@ En el proyecto se debe habilitar las siguientes [APIs de Google](https://console
 1. `Cloud Storage JSON API`
 2. `Cloud Storage`
 
-Se debe crear las credenciales para el consumo de la APIs.
+Se debe crear las credenciales para el consumo de la APIs.Genere las credenciales en formato `json` y guardelo en la carpeta `/Key` con el nombre `credencial_google.json`
 
-Genere las credenciales en formato `json` y guardelo en la carpeta `/Key` con el nombre `credencial_google.json`
+__Nota:__ Tenga en cuenta que debe partir de la configuración de la __Entrega # 2__
 
 ## Pasos para configurar Autoescalamiento de la Capa Web
 
@@ -83,6 +83,19 @@ Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herrami
 ### Agregar Servicio de Monitoring
 Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Monitoring_ -> _Descripción general_ -> _Instalar un agente_ -> _Configurar agentes_ y seleccionar la(s) instancia(s) en las que se va a instalar este servicio. Finalmente click en _Instalar el Agente de Operaciones_
 
+##### Configuración adicional arranque instancias de VM
+En la instancia `api-conversor-archivos` se deben ejecutar los siguientes comandos para que en caso de reiniciarse o hacer uso de esta imagen para la generación dinámica de instancias estas tengan los permisos necesarios para acceder al sistema de archivos. 
+
+```
+sudo chmod u+x start.sh
+sudo cp start.sh /etc/init/d
+cd /etc/rc2.d
+sudo ln -s /etc/init.d/start.sh
+sudo mv start.sh S70start.sh
+```
+
+### Informes Entrega 3
+[ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
 
 # Entrega 2 - Sistema Conversión Cloud - Despliegue Básico en la Nube Pública
 ## Pasos para desplegar la aplicación en la nube de Google:
@@ -93,13 +106,13 @@ Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herrami
      
 | API - Microservicio    | Servicio     | Serie | Tipo maquina              | Disco de Arranque       | IP           |
 |------------------------|--------------|-------|---------------------------|-------------------------|--------------|
-| api-conversor-archivos* | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.6   |
-| api-convertir-archivo  | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.4   |
-| api-enviar-correo      | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.5   |
-| file-server-nfs        | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.9   |
-| myapp-kafka            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.2   |
-| jmeter-test            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.7   |
-| bd-conversor-audior**    | Cloud SQL    | MySQL | 4 vCPU                    | 26GB / 100GB SSD        | 34.27.228.33 |
+| api-conversor-archivos* | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | `10.128.0.6`   |
+| api-convertir-archivos  | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | `10.128.0.4`   |
+| api-enviar-correo      | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | `10.128.0.5`   |
+| file-server-nfs        | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | `10.128.0.9`   |
+| myapp-kafka            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | `10.128.0.2`   |
+| jmeter-test            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | `10.128.0.7`   |
+| bd-conversor-audior**    | Cloud SQL    | MySQL | 4 vCPU                    | 26GB / 100GB SSD        | `34.27.228.33` |
 
 </div>
 
