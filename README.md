@@ -1,13 +1,5 @@
 # MISW4204-202215 Grupo 4
 
-Pasos del NFS automatico
-
-sudo chmod u+x start.sh
-sudo cp start.sh /etc/init/d
-cd /etc/rc2.d
-sudo ln -s /etc/init.d/start.sh
-sudo mv test.sh S70start.sh
-
 # Entrega 3 - Sistema Conversión Cloud - Escalabilidad en la Capa Web
 
 En el proyecto se debe habilitar las siguientes [APIs de Google](https://console.cloud.google.com/apis/library?project=IdProyecto):
@@ -24,6 +16,8 @@ Genere las credenciales en formato `json` y guardelo en la carpeta `/Key` con el
 ### Crear imagen
 Se debe crear una imagen de arranque con un disco de origen basado en la `api-conversor-archivos` para la creación dinámica de instancias al momento de realizar AutoScalling. Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _almacenamiento_ -> _imagenes_ -> y _crear nueva imagen_ con la siguiente especificaciones:
 
+<div align="center">
+
 | Campo              | Valor                    |
 |--------------------|--------------------------|
 | origen             | Disco                    |
@@ -31,19 +25,26 @@ Se debe crear una imagen de arranque con un disco de origen basado en la `api-co
 | Ubicación          | Regional                 |
 | Seleccionar región | us-central1 (lowa)       |
 
+</div>
+     
 ### Crear plantilla de instancia
 Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Plantillas de instancia_ y _Crear Plantillas de Intancias_ con las siguientes especificaciones:
 
+<div align="center">
+     
 | Campo             | Valor                                                                |
 |-------------------|----------------------------------------------------------------------|
 | Serie             | N1                                                                   |
 | Tipo de Maquina   | f1-micro (1 vCPU / 614MB)                                            |
 | Disco de arranque | imagen personalizada (seleccionar imagen creada en el paso anterior) |
-
+     
+</div>
 
 ### Crear Grupo de Instancias (MIG)
 Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Grupo de Instancias_ -> _Crear Grupo de Instancias_ -> _New Managed Instance Group (stateless)_ e ingrese la siguiente configuración:
 
+<div align="center">
+     
 | Campo                       | Valor                                              |
 |-----------------------------|----------------------------------------------------|
 | nombre                      | _nombre-grupo_                                     |
@@ -57,21 +58,27 @@ Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Grupo d
 | Periodo de Inactividad      | 120s                                               |
 | Agregar Puerto              | 80                                                 |
 
-
-### Crear red VPC
-Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Red de VPC_ -> _Redes de VPC_ y _Crear Red de VPC_ 
+</div>
 
 ### Crear Balanceador de Carga
-Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Servicios de red_ -> _Balanceo de cargas_ -> _Crear Balanceador de Cargas_ -> _Balanceador de cargas HTTP(S)_
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Servicios de red_ -> _Balanceo de cargas_ -> _Crear Balanceador de Cargas_ -> _Balanceador de cargas HTTP(S)_. Para crear el balanceador es necesario crear un _servicio de backend_ y un _servicio de verificación de estado_. Estos están incluidos en el formulario principal al crear el balanceador. Use la siguientes especificaciones. 
 
-* Orientado a Internet o solo interno: 
-* Global o Regional: 
+<div align="center">
+     
+| Campo                          | Valor                                  |
+|--------------------------------|----------------------------------------|
+| nombre                         | _nombre_servicio_                      |
+| Tipo de Backend                | Grupo de instancias                    |
+| Protocolo                      | HTTP                                   |
+| Grupo de instancias            | Selecionar grupo creado en el paso anterior       |
+| Número de puerto               | 80                                     |
+| Modo de balanceo               | Utilización                            |
+| Utilización máxima del backend | 80%                                    |
+| Máximo de RPS                  | 10                                     |
+| Capacidad                      | 100%                                   |
+| Verificación de estado         | Crear con la configuración por defecto | 
 
-
-
-#### Crear servicio de back-end
-
-#### Crear estado
+</div>
 
 ### Agregar Servicio de Monitoring
 Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herramientas de Redes_ -> _Monitoring_ -> _Descripción general_ -> _Instalar un agente_ -> _Configurar agentes_ y seleccionar la(s) instancia(s) en las que se va a instalar este servicio. Finalmente click en _Instalar el Agente de Operaciones_
@@ -82,6 +89,8 @@ Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herrami
 
 ### 1. Cree instancias de VM en la consola de GCP y desplieguelas de acuerdo a las siguientes especificaciones:
 
+<div align="center">
+     
 | API - Microservicio    | Servicio     | Serie | Tipo maquina              | Disco de Arranque       | IP           |
 |------------------------|--------------|-------|---------------------------|-------------------------|--------------|
 | api-conversor-archivos* | Instancia VM | N1    | f1-micro (1 vCPU / 614MB) | Ubuntu 18.04 / 10GB SSD | 10.128.0.6   |
@@ -91,6 +100,8 @@ Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Herrami
 | myapp-kafka            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.2   |
 | jmeter-test            | Instancia VM | E2    | e2-small (2 vCPU / 2GB)   | Ubuntu 18.04 / 10GB SSD | 10.128.0.7   |
 | bd-conversor-audior**    | Cloud SQL    | MySQL | 4 vCPU                    | 26GB / 100GB SSD        | 34.27.228.33 |
+
+</div>
 
 **Zona:** us-central1-a
 
