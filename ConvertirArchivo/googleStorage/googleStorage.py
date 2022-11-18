@@ -7,7 +7,7 @@ if os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None) is None:
 
 bucket_name = os.environ.get('GOOGLE_APPLICATION_BUCKET_NAME', None)
 if bucket_name is None:
-    bucket_name = 'grupo4-cloud-366900-archivos'
+    bucket_name = 'grupo4-cloud-368923-archivos'
 
 class GoogleStorage:
     def upload_to_bucket(self, blob_name, file_path):

@@ -2,8 +2,7 @@ import smtplib
 from email.message import EmailMessage
 
 class EnviarNotificacion:
-    def send_email_notification(self,m):
-        print('Va a preparar el correo')
+    def send_email_notification(self, m):
         body = """
             <!DOCTYPE html>
                 <head>
@@ -52,6 +51,3 @@ class EnviarNotificacion:
 
         # Detener la conexión al servidor
         server.quit()
-
-        print('Se envio el correo con exito')
-

@@ -55,7 +55,7 @@ class ActualizarTarea(Resource):
                            }
                 }
             kafka_producer = KafkaProducerCliente()
-            kafka_producer.enviarTarea('Tareas', str(tarea_actualizar.id), json_response)
+            kafka_producer.enviarTarea(str(tarea_actualizar.id), json_response)
 
         response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

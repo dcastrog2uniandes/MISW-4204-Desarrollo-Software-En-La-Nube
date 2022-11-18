@@ -54,14 +54,14 @@ class CrearTarea(Resource):
             db.session.commit()
             response.message = "Tarea creada exitosamente"
             json_response = {
-                'tarea': tarea_schema.dump(Tarea.query.filter(Tarea.id == nueva_tarea.id).first()),
-                'usuario': {
-                                'id': usuario_tarea.username,
-                                'email': usuario_tarea.email
+                "tarea": tarea_schema.dump(Tarea.query.filter(Tarea.id == nueva_tarea.id).first()),
+                "usuario": {
+                                "id": usuario_tarea.username,
+                                "email": usuario_tarea.email
                            }
                 }
             kafka_producer = KafkaProducerCliente()
-            kafka_producer.enviarTarea('Tareas', str(nueva_tarea.id), json_response)
+            kafka_producer.enviarTarea(str(nueva_tarea.id), json_response)
 
         response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

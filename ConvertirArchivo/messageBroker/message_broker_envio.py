@@ -1,21 +1,27 @@
-from json import dumps
-from kafka import KafkaProducer
 import os
+from google.cloud import pubsub_v1
 
 class KafkaProducerRespuestas():
-    server = os.environ.get('SERVER_KAFKA', None)
-    if server == None:
-        server = 'localhost:9092'
-    
-    producer = KafkaProducer(
-        bootstrap_servers = [server],
-        value_serializer=lambda m: dumps(m).encode('utf-8')
-    )
-    
-    def enviarNotificacion(self, topic, keys, mensaje):
-        self.producer.send(topic, key=bytes(keys, 'utf-8'), value=mensaje)
-        self.producer.flush()
+    if os.environ.get('GOOGLE_APPLICATION_PUB_RESPUESTA', None) is None:
+        os.environ['GOOGLE_APPLICATION_PUB_RESPUESTA'] = 'projects/grupo4-cloud-368923/topics/Respuesta'
 
-    def enviarRespuesta(self, topic, keys, mensaje):
-        self.producer.send(topic, key=bytes(keys, 'utf-8'), value=mensaje)
-        self.producer.flush()
+    topic_path_respuesta = os.environ.get('GOOGLE_APPLICATION_PUB_RESPUESTA', None)
+
+    if os.environ.get('GOOGLE_APPLICATION_PUB_NOTIFICAR', None) is None:
+        os.environ['GOOGLE_APPLICATION_PUB_NOTIFICAR'] = 'projects/grupo4-cloud-368923/topics/Notificar'
+
+    topic_path_notificar = os.environ.get('GOOGLE_APPLICATION_PUB_NOTIFICAR', None)
+    
+    def enviarNotificacion(self, keys, mensaje):
+        publisher = pubsub_v1.PublisherClient(publisher_options = pubsub_v1.types.PublisherOptions(
+            enable_message_ordering=True,
+        ))
+        publisher.publish(self.topic_path_notificar, str(keys).encode("utf-8"), datos=str(mensaje))
+
+    def enviarRespuesta(self, keys, mensaje):
+        publisher = pubsub_v1.PublisherClient(publisher_options = pubsub_v1.types.PublisherOptions(
+            enable_message_ordering=True,
+        ))
+        publisher.publish(self.topic_path_respuesta, str(keys).encode("utf-8"), datos=str(mensaje))
+
+

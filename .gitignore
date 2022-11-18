@@ -144,3 +144,7 @@ cython_debug/
 #VSC Settings
 .vscode
 .idea/*
+key/
+EnviarCorreo/credencial_google.json
+ConvertirArchivo/credencial_google.json
+ConversorArchivosAudio/credencial_google.json

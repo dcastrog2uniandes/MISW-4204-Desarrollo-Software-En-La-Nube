@@ -5,7 +5,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from modelos.modelos import db, Usuario , Response, Tarea, TareaSchemaGeneral, FileStatus
 from validacion.validacion import Validacion
 import datetime
-from sqlalchemy import func
 from messageBroker.messagebroker import KafkaConsumerCliente
 
 tarea_schema = TareaSchemaGeneral()

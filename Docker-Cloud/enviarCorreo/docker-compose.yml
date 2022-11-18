@@ -2,7 +2,7 @@ version: "3.5"
 services:
   api-enviarCorreo:
     environment:
-      - SERVER_KAFKA=10.128.0.2:9092
+      - GOOGLE_APPLICATION_SUB_NOTIFICAR=projects/grupo4-cloud-368923/subscriptions/Notificar-sub
     container_name: api-enviarCorreo
     image: api_enviar_correo:1
     build:

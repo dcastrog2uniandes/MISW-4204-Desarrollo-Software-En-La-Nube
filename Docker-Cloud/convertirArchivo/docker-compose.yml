@@ -2,9 +2,11 @@ version: "3.5"
 services:
   api-convertirArchivo:
     environment:
-      - SERVER_KAFKA=10.128.0.2:9092
+      - GOOGLE_APPLICATION_PUB_RESPUESTA=projects/grupo4-cloud-368923/topics/Respuesta
+      - GOOGLE_APPLICATION_PUB_NOTIFICAR=projects/grupo4-cloud-368923/topics/Notificar
+      - GOOGLE_APPLICATION_SUB_TAREAS=projects/grupo4-cloud-368923/subscriptions/Tareas-sub
       - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
-      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-368923-archivos
     container_name: api-convertirArchivo
     image: api_convertir_archivo:1
     build:

@@ -1,38 +1,46 @@
-from json import dumps, loads
-from kafka import KafkaProducer, KafkaConsumer
 from actualizarEstado.actualizarEstado import ActualizarEstado
 import os
+import json
+from google.cloud import pubsub_v1
+from concurrent.futures import TimeoutError
 
 class KafkaProducerCliente:
-    server = os.environ.get('SERVER_KAFKA', None)
-    if server == None:
-        server = 'localhost:9092'
+    if os.environ.get('GOOGLE_APPLICATION_PUB_TAREAS', None) is None:
+        os.environ['GOOGLE_APPLICATION_PUB_TAREAS'] = 'projects/grupo4-cloud-368923/topics/Tareas'
 
-    producer = KafkaProducer(
-            bootstrap_servers = [server],
-            value_serializer=lambda m: dumps(m).encode('utf-8')
-        )
+    topic_path = os.environ.get('GOOGLE_APPLICATION_PUB_TAREAS', None)
+
+    if os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None) is None:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credencial_google.json'
     
-    def enviarTarea(self, topic, keys, mensaje):
-        self.producer.send(topic, key=bytes(keys, 'utf-8'), value = mensaje)
-        self.producer.flush()
-
+    def enviarTarea(self, keys, mensaje):        
+        publisher = pubsub_v1.PublisherClient(publisher_options = pubsub_v1.types.PublisherOptions(
+            enable_message_ordering=True,
+        ))
+        publisher.publish(self.topic_path, str(keys).encode("utf-8"), datos=str(mensaje))
+        
 class KafkaConsumerCliente:
-    server = os.environ.get('SERVER_KAFKA', None)
-    if server == None:
-        server = 'localhost:9092'
+    if os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None) is None:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credencial_google.json'
 
-    consumer = KafkaConsumer(
-        'Respuesta',
-        bootstrap_servers = [server],
-        value_deserializer=lambda m: loads(m.decode('utf-8')),
-        auto_offset_reset='earliest',
-        enable_auto_commit=True,
-        consumer_timeout_ms=1000
-    )
-    
-    def recibirTareas(self):
+    timeout = 5.0
+    if os.environ.get('GOOGLE_APPLICATION_SUB_RESPUESTA', None) is None:
+        os.environ['GOOGLE_APPLICATION_SUB_RESPUESTA'] = 'projects/grupo4-cloud-368923/subscriptions/Respuesta-sub'
+
+    subscription_path = os.environ.get('GOOGLE_APPLICATION_SUB_RESPUESTA', None)
+    def callback(self, message):
         actualizar_estado = ActualizarEstado()
-        for t in self.consumer:
-            actualizar_estado.actualizarEstadoTarea(t.value)
-            
+        if message.attributes:
+            for key in message.attributes:
+                actualizar_estado.actualizarEstadoTarea(json.loads(message.attributes.get(key).replace("'", chr(34))))
+        message.ack()
+
+    def recibirTareas(self):
+        subscriber = pubsub_v1.SubscriberClient()
+        streaming_pull_future = subscriber.subscribe(self.subscription_path, callback=self.callback)
+        with subscriber:
+            try:
+                streaming_pull_future.result(timeout=self.timeout)
+            except TimeoutError:
+                streaming_pull_future.cancel()
+                streaming_pull_future.result()

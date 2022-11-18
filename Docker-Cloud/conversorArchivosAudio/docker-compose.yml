@@ -2,15 +2,15 @@ version: "3.5"
 services:
   api-conversorArchivosAudio:
     environment:
-      - SERVER_KAFKA=10.128.0.2:9092
-      - ISCONTAINER=True
-      - PASSWORD=admin123456
-      - PUBLIC_IP_ADDRESS=34.27.228.33
-      - DBNAME=conversorAudio
-      - PROJECT_ID=grupo4-cloud-366900
+      - GOOGLE_APPLICATION_PUB_TAREAS=projects/grupo4-cloud-368923/topics/Tareas
+      - GOOGLE_APPLICATION_SUB_RESPUESTA=projects/grupo4-cloud-368923/subscriptions/Respuesta-sub
+      - PASSWORD=
+      - PUBLIC_IP_ADDRESS=
+      - DBNAME=conversor
+      - PROJECT_ID=grupo4-cloud-368923
       - INSTANCE_NAME=bd-conversor-audio
       - GOOGLE_APPLICATION_CREDENTIALS=credencial_google.json
-      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-366900-archivos
+      - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-368923-archivos
       - GOOGLE_APPLICATION_BUCKET_FOLDER__ORIGINAL_NAME=ArchivoOriginal/
       - GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME=ArchivoConversion/
       - RUTA_ARCHIVO_CLIENTE=../Archivos/ArchivoCliente/
