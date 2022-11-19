@@ -4,6 +4,8 @@ RUN mkdir -p /home/flask_app/EnviarCorreo
 WORKDIR /home/flask_app/EnviarCorreo
 
 COPY requirements.txt ./
+COPY /key/credencial_google.json ./
+
 RUN apk update \
     && apk add --virtual build-deps gcc python3-dev musl-dev \
     && apk add --no-cache mariadb-dev
