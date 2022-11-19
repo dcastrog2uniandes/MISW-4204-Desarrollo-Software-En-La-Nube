@@ -34,15 +34,15 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;username&quot;:&quot;miltong&quot;,&#xd;
+    &quot;username&quot;:&quot;miltong24&quot;,&#xd;
     &quot;password&quot;:&quot;123456&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">5000</stringProp>
+          <stringProp name="HTTPSampler.domain">34.117.14.189</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/login</stringProp>
@@ -133,8 +133,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">55</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <stringProp name="ThreadGroup.num_threads">300</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
         <longProp name="ThreadGroup.start_time">1666146953000</longProp>
         <longProp name="ThreadGroup.end_time">1666146953000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -165,8 +165,8 @@ vars.put(&quot;token&quot;, token);</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">5000</stringProp>
+          <stringProp name="HTTPSampler.domain">34.117.14.189</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/tasks</stringProp>
@@ -199,7 +199,7 @@ vars.put(&quot;token&quot;, token);</stringProp>
           <hashTree/>
         </hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-          <stringProp name="filename">/home/miltong24/uniandes/MISW-4204-DesarrolloNube/JmeterTest/tareasMasivo.cvs</stringProp>
+          <stringProp name="filename">/home/miltong24/uniandes/MISW-4204-DesarrolloNube/JmeterTest/tareas.csv</stringProp>
           <stringProp name="fileEncoding">UTF-8</stringProp>
           <stringProp name="variableNames">fileName,newFormat</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
@@ -321,7 +321,7 @@ vars.put(&quot;token&quot;, token);</stringProp>
             </value>
           </objProp>
           <stringProp name="filename"></stringProp>
-          <stringProp name="RespTimeGraph.interval">100</stringProp>
+          <stringProp name="RespTimeGraph.interval">500</stringProp>
           <intProp name="RespTimeGraph.linestrockwidth">5</intProp>
         </ResultCollector>
         <hashTree/>

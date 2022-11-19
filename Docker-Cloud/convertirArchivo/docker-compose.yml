@@ -15,4 +15,4 @@ services:
     ports:
       - "5001:5001"
     restart: always
-    command: ["./wait-for-it.sh", "10.128.0.2:9092", "-t", "50", "--", "gunicorn", "--bind", "0.0.0.0:5000" , "--timeout", "120", "wsgi:app"]
+    command: ["gunicorn", "-b", ":5001", "--access-logfile", "-", "--error-logfile", "-", "wsgi:app"]
