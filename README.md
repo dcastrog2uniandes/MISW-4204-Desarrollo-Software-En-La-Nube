@@ -1,5 +1,64 @@
 # MISW4204-202215 Grupo 4
 
+Entrega 4 - Sistema Conversión Cloud - Escalabilidad en la Capa backend - worker convertir archivos
+
+Para esta entrega se habilitaron el servicio Pub/sub Google, se crearon los siguientes topic`s:
+
+1. Tareas -> Asigna la tarea de conversion al worker de convertir archivos.
+2. Notificador -> :Enviar la solicitud para el envio del correo.
+3. Respuesta -> Envia la solicitud a la API conversor archivos, para actualizar el estado de la tarea si fue convertido el archivo exitosamente.
+
+Para el uso del servicio Pub/sub de google desde pytjhon, se uso la misma credencial generica que se uso para el cargue de los archivos en google storage.
+
+## Pasos para configurar Autoescalamiento de los worker convertir archivos
+
+### Crear imagen
+Se debe crear una imagen de arranque con un disco de origen basado en la `api-convertir-archivos` para la creación dinámica de instancias al momento de realizar AutoScalling. Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _almacenamiento_ -> _imagenes_ -> y _crear nueva imagen_ con la siguiente especificaciones:
+
+<div align="center">
+
+| Campo              | Valor                    |
+|--------------------|--------------------------|
+| origen             | Disco                    |
+| Disco origen       | api-convertir-archivos   |
+| Ubicación          | Regional                 |
+| Seleccionar región | us-central1 (lowa)       |
+
+</div>
+     
+### Crear plantilla de instancia
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Plantillas de instancia_ y _Crear Plantillas de Intancias_ con las siguientes especificaciones:
+
+<div align="center">
+     
+| Campo             | Valor                                                                |
+|-------------------|----------------------------------------------------------------------|
+| Serie             | E2                                                                   |
+| Tipo de Maquina   | small (2 vCPU / 2GB memoria ram)                                            |
+| Disco de arranque | imagen personalizada (seleccionar imagen creada en el paso anterior) |
+     
+</div>
+
+### Crear Grupo de Instancias (MIG)
+Desde el menú principal de la consola de GPC ir a: _Compute Engine_ -> _Grupo de Instancias_ -> _Crear Grupo de Instancias_ -> _New Managed Instance Group (stateless)_ e ingrese la siguiente configuración:
+
+<div align="center">
+     
+| Campo                       | Valor                                              |
+|-----------------------------|----------------------------------------------------|
+| nombre                      | _nombre-grupo_                                     |
+| Instance template           | Seleccionar el template creado en el paso anterior |
+| Ubicación                   | Zona única                                         |
+| Región                      | us-central1- (lowa)                                |
+| Zona                        | us-central1-a                                      |
+| Número minimo de instancias | 1                                                  |
+| Número máximo de instancias | 3                                                  |
+| Autoscaling Metrics         | Agregar las métricas deseadas                      |
+| Periodo de Inactividad      | 60s                                                |
+
+### Informes Entrega 4
+[ver wiki](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/wiki)
+
 # Entrega 3 - Sistema Conversión Cloud - Escalabilidad en la Capa Web
 
 En el proyecto se debe habilitar las siguientes [APIs de Google](https://console.cloud.google.com/apis/library?project=IdProyecto):
