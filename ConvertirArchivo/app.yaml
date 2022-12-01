@@ -1,0 +1,17 @@
+runtime: custom
+env: flex
+service: worker-convertir-archivo
+manual_scaling:
+  instances: 1
+
+resources:
+  cpu: 2
+  memory_gb: 4
+  disk_size_gb: 10
+  
+env_variables: 
+  GOOGLE_APPLICATION_PUB_RESPUESTA: "projects/grupo4-cloud-368923/topics/Respuesta"
+  GOOGLE_APPLICATION_PUB_NOTIFICAR: "projects/grupo4-cloud-368923/topics/Notificar"
+  GOOGLE_APPLICATION_SUB_TAREAS: "projects/grupo4-cloud-368923/subscriptions/Tareas-sub"
+  GOOGLE_APPLICATION_CREDENTIALS: "credencial_google.json"
+  GOOGLE_APPLICATION_BUCKET_NAME: "grupo4-cloud-368923-archivos"

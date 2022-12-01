@@ -9,10 +9,10 @@ class ConectarBD:
             os.environ['PASSWORD'] = 'admin123456'
 
         if os.environ.get('PUBLIC_IP_ADDRESS', None) is None:
-            os.environ['PUBLIC_IP_ADDRESS'] = '127.0.0.1'
+            os.environ['PUBLIC_IP_ADDRESS'] = '34.136.247.167'
         
         if os.environ.get('DBNAME', None) is None:
-            os.environ['DBNAME'] = 'conversor'
+            os.environ['DBNAME'] = 'conversorArchivos'
         
         if os.environ.get('INSTANCE_NAME', None) is None:
             os.environ['INSTANCE_NAME'] = 'bd-conversor-audio'
@@ -25,6 +25,7 @@ class ConectarBD:
         DBNAME = os.environ.get('DBNAME', None)
         PROJECT_ID = os.environ.get('PROJECT_ID', None)
         INSTANCE_NAME = os.environ.get('INSTANCE_NAME', None)
+        
         if ISLOCAL is None:
             app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
         else:

@@ -1,6 +1,5 @@
 import os
 from google.cloud import storage
-from sqlalchemy import true
 
 if os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None) is None:
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credencial_google.json'

@@ -50,9 +50,8 @@ class Validacion:
         if not file_exists:
             response.errors += [{"error": {"mensaje": "El archivo no existe", "codigo": 1008}}]            
 
-    def validacionFormatoArchivo(self, response, filepath):
+    def validacionFormatoArchivo(self, response, extension):
         formats = ['.wav','.ogg','.mp3']
-        root, extension = os.path.splitext(filepath)
         if extension not in formats:
             response.errors += [{"error": {"mensaje": "El formato no es valido", "codigo": 1009}}]
 
@@ -61,8 +60,7 @@ class Validacion:
         if formato_request not in formats:
             response.errors += [{"error": {"mensaje": "El formato no es valido", "codigo": 1009}}]
 
-    def validacionTamanioMax(self, response, filepath):
-        file_size = os.path.getsize(filepath) 
+    def validacionTamanioMax(self, response, file_size): 
         if file_size < 5000000:
             response.errors += [{"error": {"mensaje": "El archivo debe ser mayor o igual el tamanio", "codigo": 1010}}]
 

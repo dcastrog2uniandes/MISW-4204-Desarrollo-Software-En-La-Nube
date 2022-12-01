@@ -9,8 +9,9 @@ services:
       - GOOGLE_APPLICATION_BUCKET_NAME=grupo4-cloud-368923-archivos
     container_name: api-convertirArchivo
     image: api_convertir_archivo:1
-    build: .
+    build:
+      context: .
     ports:
       - "5001:5001"
     restart: always
-    
+    command: ["gunicorn", "-b", ":5001", "--access-logfile", "-", "--error-logfile", "-", "wsgi:app"]

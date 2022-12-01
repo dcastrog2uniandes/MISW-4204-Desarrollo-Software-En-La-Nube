@@ -1,0 +1,28 @@
+runtime: python
+env: flex
+service: api-conversor-archivo
+entrypoint: gunicorn -b:$PORT wsgi:app
+runtime_config:
+  python_version: '3.7'
+
+manual_scaling:
+  instances: 1
+  
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+  
+env_variables:
+  GOOGLE_APPLICATION_PUB_TAREAS: "projects/grupo4-cloud-368923/topics/Tareas"
+  GOOGLE_APPLICATION_SUB_RESPUESTA: "projects/grupo4-cloud-368923/subscriptions/Respuesta-sub"
+  PASSWORD: "admin123456"
+  PUBLIC_IP_ADDRESS: "34.136.247.167"
+  DBNAME: "conversorArchivos"
+  PROJECT_ID: "grupo4-cloud-368923"
+  INSTANCE_NAME: "bd-conversor-audio"
+  GOOGLE_APPLICATION_CREDENTIALS: "credencial_google.json"
+  GOOGLE_APPLICATION_BUCKET_NAME: "grupo4-cloud-368923-archivos"
+  GOOGLE_APPLICATION_BUCKET_FOLDER_CLIENTE_NAME: "ArchivoCliente/"
+  GOOGLE_APPLICATION_BUCKET_FOLDER__ORIGINAL_NAME: "ArchivoOriginal/"
+  GOOGLE_APPLICATION_BUCKET_FOLDER_CONVERSION_NAME: "ArchivoConversion/"

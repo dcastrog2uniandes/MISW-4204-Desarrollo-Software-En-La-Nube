@@ -41,7 +41,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">34.117.14.189</stringProp>
+          <stringProp name="HTTPSampler.domain">34.98.79.194</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -165,7 +165,7 @@ vars.put(&quot;token&quot;, token);</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">34.117.14.189</stringProp>
+          <stringProp name="HTTPSampler.domain">34.98.79.194</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -321,7 +321,7 @@ vars.put(&quot;token&quot;, token);</stringProp>
             </value>
           </objProp>
           <stringProp name="filename"></stringProp>
-          <stringProp name="RespTimeGraph.interval">500</stringProp>
+          <stringProp name="RespTimeGraph.interval">1000</stringProp>
           <intProp name="RespTimeGraph.linestrockwidth">5</intProp>
         </ResultCollector>
         <hashTree/>

@@ -34,4 +34,10 @@ class GoogleStorage:
         bucket = storage_client.get_bucket(bucket_name)
         blob = bucket.blob(blog_name)
         blob.download_to_filename(file_path)
-        
+
+    def copy_blob(self, blob_name, destination_blob_name):
+        storage_client = storage.Client()
+        source_bucket = storage_client.bucket(bucket_name)
+        source_blob = source_bucket.blob(blob_name)
+        blob_copy = source_bucket.copy_blob(source_blob, source_bucket, destination_blob_name)
+        return blob_copy

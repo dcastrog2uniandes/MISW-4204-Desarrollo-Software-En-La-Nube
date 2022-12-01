@@ -8,9 +8,9 @@ import datetime
 import os
 
 validacion = Validacion()
-folder_cliente_name = os.environ.get('RUTA_ARCHIVO_CLIENTE', None)
+folder_cliente_name = os.environ.get('GOOGLE_APPLICATION_BUCKET_FOLDER_CLIENTE_NAME', None)
 if folder_cliente_name is None:
-    folder_cliente_name = '../Archivos/ArchivoCliente/'
+    folder_cliente_name = 'ArchivoCliente/'
 
 class RecuperarArchivo(Resource):
     @jwt_required()
@@ -26,8 +26,8 @@ class RecuperarArchivo(Resource):
             filepath = [a for a in ([ta.fileOriginal for ta in Tarea.query.filter(Tarea.usuario == id_usuario).all() if ta.fileOriginal is not None] + [ta.fileConvertido for ta in Tarea.query.filter(Tarea.usuario == id_usuario).all() if ta.fileConvertido is not None]) if a.split('/')[-1] == filename][0]
             if validacion.validacionExisteArchivoActualizar(filepath):
                 googleStorage = GoogleStorage()
-                googleStorage.download_file_from_bucket(filepath, folder_cliente_name + filename)
-                response.message = 'El archivo ' + filename +  ' fue recuperado en la ruta ' + folder_cliente_name 
+                googleStorage.copy_blob(filepath, folder_cliente_name + filename)
+                response.message = 'El archivo ' + filename +  ' fue recuperado en la ruta del bucket ' + folder_cliente_name 
                 response.succeded = True    
             response.hora_fin = str(datetime.datetime.now())
         return response.__dict__

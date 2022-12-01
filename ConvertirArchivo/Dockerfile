@@ -1,0 +1,29 @@
+FROM python:3.10-alpine
+
+RUN mkdir -p /home/flask_app/Archivos
+RUN mkdir -p /home/flask_app/Archivos/ArchivoCliente
+RUN mkdir -p /home/flask_app/Archivos/ArchivoConversion
+RUN mkdir -p /home/flask_app/Archivos/ArchivoOriginal
+
+RUN mkdir -p /home/flask_app/ConvertirArchivo
+WORKDIR /home/flask_app/ConvertirArchivo
+
+COPY requirements.txt ./
+COPY credencial_google.json ./
+
+RUN apk update \
+    && apk add --virtual build-deps gcc python3-dev musl-dev \
+    && apk add --no-cache mariadb-dev
+
+RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add --update bash && rm -rf /var/cache/apk/*
+
+RUN apk upgrade -U \ 
+    && apk add ca-certificates ffmpeg libva-intel-driver \
+    && rm -rf /var/cache/*
+
+RUN apk del build-deps
+
+COPY ./ ./
+
+CMD ["gunicorn", "-b", ":5001", "--access-logfile", "-", "--error-logfile", "-", "wsgi:app"]
