@@ -1,5 +1,20 @@
 # MISW4204-202215 Grupo 4
 
+# Entrega 5 - Sistema Conversión Cloud - PaaS
+
+Para esta entrega se utilizo los servicios de App Engine para desplegar la api de conversor archivos y los dos worker convertir archivo y enviar notificacion, se implemento todo como servicio sin servidor.
+
+Dentro de la carpeta [ConversorArchivosAudio](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/tree/main/ConversorArchivosAudio), esta el archivo app.yaml el cual contiene la configuracion del despliegue de la api.
+
+Dentro de la carpeta [ConversorArchivosAudio](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/tree/main/ConvertirArchivo), esta el archivo app.yaml el cual contiene la configuracion del despliegue de la api.
+
+Dentro de la carpeta [EnviarCorreo](https://github.com/mcgomeztuniandes/MISW-4204-DesarrolloNube/tree/main/EnviarCorreo), esta el archivo app.yaml el cual contiene la configuracion del despliegue de la api.
+
+Para desplegar desde la consola se debe tener instalado el componente [Instala la CLI](https://cloud.google.com/sdk/docs/install?hl=es-419) en la maquina local.
+
+Dentro de cada carpeta ejecutar el comando gcloud app deploy, con esto se despliega el componente en un servicio de app engine.
+
+
 # Entrega 4 - Sistema Conversión Cloud - Escalabilidad en la Capa backend - worker convertir archivos
 
 Para esta entrega se habilitaron el servicio Pub/sub Google, se crearon los siguientes topic`s:
